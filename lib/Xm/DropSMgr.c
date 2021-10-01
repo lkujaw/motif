@@ -505,7 +505,9 @@ DropSiteManagerInitialize(
 	dsm->dropManager.rootW = dsm->dropManager.rootH = ~0;
 	dsm->dropManager.clipperList = NULL;
 	dsm->dropManager.updateInfo = NULL;
+#ifdef M222i
 	dsm->dropManager.updateTimeOutId = 0;
+#endif
 
 	/* Patch around broken Xt interfaces */
 	XtGetSubresources(nw, info, NULL, NULL, _XmDSResources,
@@ -518,8 +520,10 @@ Destroy(
 {
 	XmDropSiteManagerObject	dsm = (XmDropSiteManagerObject)w;
 
+#ifdef M222i
 	if (dsm->dropManager.updateTimeOutId)
 	    XtRemoveTimeOut(dsm->dropManager.updateTimeOutId);
+#endif
 
 	DSMDestroyTable(dsm);
 	_XmRegionDestroy(dsm->dropManager.curAncestorClipRegion);
@@ -3899,7 +3903,11 @@ EndUpdate(
 
   /* We don't add a timeout if the record is already marked for update */
   if (clean) {
+#ifdef M222i
     dsm -> dropManager.updateTimeOutId =
+#else
+    (void)
+#endif
       XtAppAddTimeOut(XtWidgetToApplicationContext(shell), 0,
 		      _XmIEndUpdate, dsm);
   }
@@ -3914,12 +3922,14 @@ _XmIEndUpdate(XtPointer client_data, XtIntervalId *interval_id)
   Widget shell;
   XmDSInfo shellInfo;
 
+#ifdef M222i
   /* Remove timeout if this is a forced update */
   if (dsm -> dropManager.updateTimeOutId) {
     if (interval_id == NULL)
       XtRemoveTimeOut(dsm -> dropManager.updateTimeOutId);
     dsm -> dropManager.updateTimeOutId = 0;
   }
+#endif
 
   /* Return if all updates have already happened */
   while(dsm -> dropManager.updateInfo != NULL) {
