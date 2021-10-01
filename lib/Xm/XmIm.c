@@ -121,7 +121,7 @@ typedef struct {
  * Although the current implementation of XVaNestedList is similar
  * to an Xt ArgList, this is not guaranteed by the spec.  The only
  * approved interface for creating XVaNestedLists takes pairs of
- * (char*, XPointer) paramters.
+ * (char*, XPointer) parameters.
  */
 typedef struct {
   char    *name;
@@ -244,7 +244,7 @@ static void set_callback_values(Widget w,
 static void regist_real_callback(Widget w,
                      XIMProc call,
                      int swc);
-static XICProc get_real_callback(Widget w,
+static XIMProc get_real_callback(Widget w,
                   int swc,
 		  Widget *real_widget);
 static void move_preedit_string(XmImXICInfo icp,
@@ -1418,7 +1418,7 @@ ImPreeditStartCallback(XIC xic,
 		       XPointer client_data,
 		       XPointer call_data)
 {
-  XICProc proc;
+  XIMProc proc;
   Widget real = NULL;
 
   if (!client_data){
@@ -1437,7 +1437,7 @@ ImPreeditDoneCallback(XIC xic,
 		      XPointer client_data,
 		      XPointer call_data)
 {
-  XICProc proc;
+  XIMProc proc;
   Widget w = (Widget)client_data;
   XmImShellInfo im_info;
   XmImXICInfo icp;
@@ -1468,7 +1468,7 @@ ImPreeditDrawCallback(XIC xic,
 		      XPointer client_data,
 		      XPointer call_data)
 {
-  XICProc proc;
+  XIMProc proc;
   Widget w = (Widget)client_data;
   XmImShellInfo im_info;
   XmImXICInfo icp;
@@ -1595,7 +1595,7 @@ ImPreeditCaretCallback(XIC xic,
 		       XPointer client_data,
 		       XPointer call_data)
 {
-  XICProc proc;
+  XIMProc proc;
   Widget w = (Widget)client_data;
   XmImShellInfo im_info;
   XmImXICInfo icp;
@@ -1634,7 +1634,7 @@ ImPreeditCaretCallback(XIC xic,
     (*proc)(xic, (XPointer)real, call_data);
 }
 
-static XICProc
+static XIMProc
 get_real_callback(Widget w,
                   int swc,
 		  Widget *real_widget)
@@ -1645,9 +1645,9 @@ get_real_callback(Widget w,
   XmImRefRec refs;
 
   if ((im_info = get_im_info(w, False)) == NULL)
-        return (XICProc)NULL;
+        return (XIMProc)NULL;
   if ((icp = im_info->shell_xic) == NULL)
-        return (XICProc)NULL;
+        return (XIMProc)NULL;
 
   if (*real_widget == NULL) 
     *real_widget = XtWindowToWidget(XtDisplay(w), icp->focus_window);
@@ -1665,9 +1665,9 @@ get_real_callback(Widget w,
   }
 
   if (refs.callbacks[target])
-    return (XICProc)refs.callbacks[target][swc];
+    return (XIMProc)refs.callbacks[target][swc];
   else
-    return (XICProc)NULL;
+    return (XIMProc)NULL;
 }
 
 static void
@@ -1799,7 +1799,7 @@ move_preedit_string(XmImXICInfo icp,
   PreeditBuffer pb = icp->preedit_buffer;
   XIMPreeditDrawCallbackStruct draw_data;
   XIMText text;
-  XICProc proc;
+  XIMProc proc;
 
   proc = get_real_callback(wfrom, PREEDIT_DONE, &wfrom);
   if (proc)
