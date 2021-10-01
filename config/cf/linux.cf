@@ -290,11 +290,18 @@ XCOMM binutils:	(LinuxBinUtilsMajorVersion)
 #endif /* AlphaArchitecture */
 
 #ifdef ia64Architecture
-#define OptimizedCDebugFlags  -O2
-#define LinuxMachineDefines   -D__ia64__
-#define ServerOSDefines       XFree86ServerOSDefines -DDDXTIME -DPART_NET
-#define ServerExtraDefines    -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+#define OptimizedCDebugFlags	-O2
+#define LinuxMachineDefines	-D__ia64__
+#define ServerOSDefines		XFree86ServerOSDefines -DDDXTIME -DPART_NET
+#define ServerExtraDefines		-DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
 #endif /* ia64Architecture */
+
+#ifdef s390Architecture
+#define OptimizedCDebugFlags	-O2
+#define LinuxMachineDefines	-D__s390__
+#define ServerOSDefines		XFree86ServerOSDefines -DDDXTIME -DEPART_NET
+#define ServerExtraDefines		-DGCCUSESGAS XFree86ServerDefines
+#endif /* s390Architecture */
 
 #ifdef Mc68020Architecture
 #define OptimizedCDebugFlags	-O2

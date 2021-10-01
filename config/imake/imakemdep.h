@@ -330,6 +330,9 @@ char *cpp_argv[ARGUMENTS] = {
 # ifdef __ia64__
         "-D__ia64__",
 # endif
+#ifdef _s390_
+       "-D_s390_"
+#endif
 # ifdef __alpha__
         "-D__alpha__",
 # endif
