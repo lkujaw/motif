@@ -1,4 +1,4 @@
- * Motif
+/* Motif
  *
  * Copyright (c) 1987-2012, The Open Group. All rights reserved.
  *
