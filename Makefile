@@ -19,7 +19,7 @@
 # License along with these librararies and programs; if not, write
 # to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 # Floor, Boston, MA 02110-1301 USA
-# 
+#
 # HISTORY
 #
 # Makefile.ini
@@ -30,28 +30,28 @@
 # should be used.  However, if it is accidentally corrupted, or a build
 # is initiated on a new platform, Makefile.ini can be used to restart.
 #
-     RELEASE = "Release 2.1.32"
-     PRODUCT = "Motif"
-       SHELL = /bin/sh
-          RM = rm -f
-          MV = mv
-       NMAKE = nmake
-   WORLDOPTS = -k
+       RELEASE = "Release 2.1.32"
+       PRODUCT = "Motif"
+         SHELL = /bin/sh
+            RM = rm -f
+            MV = mv
+         NMAKE = nmake
+     WORLDOPTS = -k
 WIN32WORLDOPTS = -i
-         TOP = .
- CURRENT_DIR = .
-   CONFIGSRC = $(TOP)/config
-    IMAKESRC = $(CONFIGSRC)/imake
-   DEPENDSRC = $(CONFIGSRC)/makedepend
-   DEPENDTOP = ../..
-    IMAKETOP = ../..
-    IRULESRC = $(CONFIGSRC)/cf
-       IMAKE = $(IMAKESRC)/imake
-   IMAKE_CMD = $(IMAKE) -I$(IRULESRC) $(IMAKE_DEFINES)
-   MAKE_OPTS = -f xmakefile
-    MAKE_CMD = $(MAKE) $(MAKE_OPTS)
-   NMAKE_CMD = $(NMAKE) $(MAKE_OPTS)
-       FLAGS = $(MFLAGS) -f Makefile.ini BOOTSTRAPCFLAGS="$(BOOTSTRAPCFLAGS)"
+           TOP = .
+   CURRENT_DIR = .
+     CONFIGSRC = $(TOP)/config
+      IMAKESRC = $(CONFIGSRC)/imake
+     DEPENDSRC = $(CONFIGSRC)/makedepend
+     DEPENDTOP = ../..
+      IMAKETOP = ../..
+      IRULESRC = $(CONFIGSRC)/cf
+         IMAKE = $(IMAKESRC)/imake
+     IMAKE_CMD = $(IMAKE) -I$(IRULESRC) $(IMAKE_DEFINES)
+     MAKE_OPTS = -f xmakefile
+      MAKE_CMD = $(MAKE) $(MAKE_OPTS)
+     NMAKE_CMD = $(NMAKE) $(MAKE_OPTS)
+         FLAGS = $(MFLAGS) -f Makefile.ini BOOTSTRAPCFLAGS="$(BOOTSTRAPCFLAGS)"
 
 all:
 	@$(MAKE_CMD) xmakefile-exists || $(MAKE) all-initial
@@ -121,7 +121,7 @@ $(IMAKESRC)/Makefile.proto:
 imake.bootstrap:
 	cd $(IMAKESRC) && $(MAKE) -f Makefile.proto bootstrapdepend
 	cd $(IMAKESRC) && $(MAKE) $(FLAGS) bootstrap
-	cd $(IMAKESRC) && $(MAKE) -f Makefile.proto all 
+	cd $(IMAKESRC) && $(MAKE) -f Makefile.proto all
 	-@if [ -f xmakefile ]; then set -x; \
 	  $(RM) xmakefile.bak; $(MV) xmakefile xmakefile.bak; \
 	  else exit 0; fi
@@ -164,30 +164,30 @@ World.Win32:
 # a copy of every rule that might be invoked at top level
 
 clean:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 dangerous_strip_clean:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 depend:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 Everything:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 external.ln:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 includes:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 install.ln:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 install.man:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 install:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 install.cde:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 Makefiles:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 man_keywords:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 tags:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@
 VerifyOS:
-	    $(MAKE_CMD) $@
+	$(MAKE_CMD) $@

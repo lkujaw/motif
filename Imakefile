@@ -1,4 +1,4 @@
-XCOMM 
+XCOMM
 XCOMM Motif
 XCOMM
 XCOMM Copyright (c) 1987-2012, The Open Group. All rights reserved.
@@ -19,10 +19,10 @@ XCOMM You should have received a copy of the GNU Lesser General Public
 XCOMM License along with these librararies and programs; if not, write
 XCOMM to the Free Software Foundation, Inc., 51 Franklin Street, Fifth
 XCOMM Floor, Boston, MA 02110-1301 USA
-XCOMM 
-XCOMM 
+XCOMM
+XCOMM
 XCOMM HISTORY
-XCOMM 
+XCOMM
 XCOMM   $TOG: Imakefile /main/22 1999/05/19 17:00:13 mgreess $
 #define IHaveSubdirs
 #define PassCDebugFlags CDEBUGFLAGS="$(CDEBUGFLAGS)"
@@ -30,11 +30,11 @@ XCOMM   $TOG: Imakefile /main/22 1999/05/19 17:00:13 mgreess $
 RELEASE = "Release 2.1.32"
 PRODUCT = "Motif"
 #if BuildMotifDemos
-      DEMOSDIRECTORY = demos
+DEMOSDIRECTORY = demos
 #endif
-      SUBDIRS = config localized lib tools/wml clients $(DEMOSDIRECTORY) \
-	bitmaps bindings doc/man
-      CDE_SUBDIRS = lib clients/uil clients/xmbind
+SUBDIRS = config localized lib tools/wml clients $(DEMOSDIRECTORY) \
+          bitmaps bindings doc/man
+CDE_SUBDIRS = lib clients/uil clients/xmbind
 
 MakeSubdirs($(SUBDIRS))
 DependSubdirs($(SUBDIRS))
@@ -67,12 +67,12 @@ clean::
 	$(RM) -r $(BUILDDOCDIR)
 	$(RM) -r $(BUILDLOCDIR)
 
-      WORLDOPTS = -k
-      MAKE_OPTS = -f xmakefile
+WORLDOPTS = -k
+MAKE_OPTS = -f xmakefile
 
-XCOMM 
+XCOMM
 XCOMM install; create the directories that we're going to need
-XCOMM 
+XCOMM
 
 #ifdef UseInstalled
 TESTS_IMAKE = $(IMAKE) -DUseInstalled
@@ -128,6 +128,6 @@ testsMakefile::
 	fi; \
 	$(TESTS_IMAKE) -I../$(IRULESRC) $(IMAKE_DEFINES) -DTOPDIR=../. -DCURDIR=$(CURRENT_DIR)/tests ; fi
 
-XCOMM special target to determine if the xmakefile exists. 
+XCOMM special target to determine if the xmakefile exists.
 XCOMM Works on both Unix and NMAKE.EXE
 xmakefile-exists::
