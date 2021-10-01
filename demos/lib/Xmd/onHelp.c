@@ -26,6 +26,7 @@
  * HISTORY
  */
 
+#include <stdlib.h>
 #include <Xm/Xm.h>
 #include "Help.h"
 

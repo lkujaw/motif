@@ -39,6 +39,7 @@ static char rcsid[] = "$TOG: CutPaste.c /main/27 1999/05/26 17:42:48 samborn $"
 #include "CutPasteI.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define XMERROR(key, message)                                            \
     XtErrorMsg (key, "xmClipboardError", "XmToolkitError", message, NULL, NULL)

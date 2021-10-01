@@ -25,6 +25,7 @@
 /*
  * HISTORY
  */
+#include <stdlib.h>
 #include <Xm/XmP.h> /* for XmeGetDefaultRenderTable */
 #include <Xm/XmIm.h>
 #include "dainput.h"

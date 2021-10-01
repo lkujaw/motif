@@ -33,6 +33,7 @@
  *
  ******************************************************************************/
 
+#include <stdlib.h>
 #include <Xm/Xm.h>
 #include <Xm/CascadeB.h>
 #include <Xm/MainW.h>

@@ -177,6 +177,11 @@
 #endif
 #endif
 
+/* Define exit() */
+#ifdef __STDC__
+#include <stdlib.h>
+#endif
+
 /* this is for OS/2 under EMX. This won't work with DOS */
 #if defined(__EMX__)
 #define imake_ccflags "-DBSD43"

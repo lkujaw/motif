@@ -30,6 +30,7 @@ static char *rcsid = "$XConsortium: todo.c /main/6 1995/07/14 09:46:43 drk $";
 #endif
 #endif
 
+#include <stdlib.h>
 #include <pwd.h>
 #include <unistd.h>
 /* X include files */

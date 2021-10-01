@@ -45,6 +45,7 @@
 #include <X11/Xos.h>
 #include <X11/Xfuncproto.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/param.h>
 #include <errno.h>

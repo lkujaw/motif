@@ -33,6 +33,7 @@
  ******************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <Xm/Xm.h>
 #include <Xm/MessageB.h>
 #include <Mrm/MrmPublic.h>

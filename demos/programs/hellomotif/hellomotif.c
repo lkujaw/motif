@@ -31,6 +31,7 @@ static char rcsid[] = "$XConsortium: hellomotif.c /main/6 1995/07/14 09:42:12 dr
 /*
 *  (c) Copyright 1989, DIGITAL EQUIPMENT CORPORATION, MAYNARD, MASS. */
 
+#include <stdlib.h>
 #include <Xm/XmAll.h>       /* Motif Toolkit */
 #include <Mrm/MrmPublic.h>  /* Mrm Toolkit */
 
