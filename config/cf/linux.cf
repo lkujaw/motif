@@ -88,13 +88,24 @@ XCOMM binutils:	(LinuxBinUtilsMajorVersion)
 #define BinUtilsMajorVersion	LinuxBinUtilsMajorVersion
 #endif
 
+/* #define LinuxGnuSourceDefines   */
+#ifndef LinuxGnuSourceDefines
+#ifdef UseInstalled
+#define LinuxGnuSourceDefines  /**/
+#else
+#define LinuxGnuSourceDefines  -D_GNU_SOURCE
+#endif
+#endif
+
 #if LinuxCLibMajorVersion >= 6 || \
 	(LinuxCLibMajorVersion == 5 && LinuxCLibMinorVersion == 99)
 #define LinuxSourceDefines	-D_POSIX_C_SOURCE=199309L \
 				-D_POSIX_SOURCE -D_XOPEN_SOURCE=500L \
 				-D_BSD_SOURCE -D_SVID_SOURCE
+				LinuxAdditionalIncludes LinuxGnuSourceDefines \
+				LinuxLocaleDefines
 #define XawI18nDefines		-DHAS_WCHAR_H -DHAS_WCTYPE_H -DNO_WIDEC_H
-#if !defined(ArmArchitecture)
+#if !defined(ArmArchitecture) && !defined(ia64Architecture)
 #define HasPosixThreads		YES
 #define ThreadedX		YES
 #define HasThreadSafeAPI	YES
@@ -107,6 +118,7 @@ XCOMM binutils:	(LinuxBinUtilsMajorVersion)
 #else
 #define LinuxSourceDefines	-D_POSIX_SOURCE \
 				-D_BSD_SOURCE -D_SVID_SOURCE -DX_LOCALE
+				LinuxGnuSourceDefines LinuxLocaleDefines
 #define XawI18nDefines		-DUSE_XWCHAR_STRING -DUSE_XMBTOWC
 #ifndef HasLibCrypt
 #define HasLibCrypt		NO
@@ -189,6 +201,14 @@ XCOMM binutils:	(LinuxBinUtilsMajorVersion)
 #define LdCmd			/usr/i486-linuxaout/bin/ld -m i386linux
 #define AsmDefines		-DUSE_GAS -U__ELF__
 #endif /* i386Architecture */
+#ifdef ia64Architecture
+#define CcCmd                 gcc
+#define CplusplusCmd          g++
+#define AsCmd                 as
+#define LdCmd                 ld
+#define AsmDefines            -DUSE_GAS -U__ELF__
+#define HasSharedLibraries    NO
+#endif /* ia64Architecture */
 #ifdef Mc68020Architecture
 #define CcCmd			gcc -b m68k-linuxaout
 #define CplusplusCmd		g++ -b m68k-linuxaout
@@ -206,6 +226,14 @@ XCOMM binutils:	(LinuxBinUtilsMajorVersion)
 #define AsmDefines		-D__ELF__
 #define CplusplusCmd		c++ -b alpha-linux
 #endif /* AlphaArchitecture */
+#ifdef ia64Architecture
+#define CcCmd                 gcc
+#define CplusplusCmd          g++
+#define AsCmd                 as
+#define LdCmd                 ld
+#define AsmDefines            -D__ELF__
+#define HasSharedLibraries    NO
+#endif /* ia64Architecture */
 #ifdef i386Architecture
 #define CcCmd			gcc -b i486-linux
 #define AsCmd			/usr/i486-linux/bin/as
@@ -260,6 +288,13 @@ XCOMM binutils:	(LinuxBinUtilsMajorVersion)
 #define ServerOSDefines		XFree86ServerOSDefines -DDDXTIME -DPART_NET
 #define ServerExtraDefines	-DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
 #endif /* AlphaArchitecture */
+
+#ifdef ia64Architecture
+#define OptimizedCDebugFlags  -O2
+#define LinuxMachineDefines   -D__ia64__
+#define ServerOSDefines       XFree86ServerOSDefines -DDDXTIME -DPART_NET
+#define ServerExtraDefines    -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+#endif /* ia64Architecture */
 
 #ifdef Mc68020Architecture
 #define OptimizedCDebugFlags	-O2
