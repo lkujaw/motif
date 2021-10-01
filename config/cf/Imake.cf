@@ -19,13 +19,6 @@ XCOMM $XFree86: xc/config/cf/Imake.cf,v 3.34.2.14 1999/07/29 09:22:23 hohndel Ex
  *     4.  Create a .cf file with the name given by MacroFile.
  */
 
-#if defined(clipper) || defined(__clipper__)
-# undef clipper
-# define MacroIncludeFile <ingr.cf>
-# define MacroFile ingr.cf
-# define IngrArchitecture
-#endif /* clipper */
-
 #if defined(__APPLE__)
 # undef __APPLE__
 # define MacroIncludeFile <darwin.cf>
@@ -39,7 +32,18 @@ XCOMM $XFree86: xc/config/cf/Imake.cf,v 3.34.2.14 1999/07/29 09:22:23 hohndel Ex
 #  define i386DarwinArchitecture
 #  undef __i386__
 # endif
+# ifdef __x86_64__
+#  define x86_64DarwinArchitecture
+#  undef __x86_64__
+# endif
 #endif
+
+#if defined(clipper) || defined(__clipper__)
+# undef clipper
+# define MacroIncludeFile <ingr.cf>
+# define MacroFile ingr.cf
+# define IngrArchitecture
+#endif /* clipper */
 
 #ifdef ultrix
 # define MacroIncludeFile <ultrix.cf>

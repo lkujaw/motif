@@ -7,6 +7,9 @@ XCOMM platform:  $XFree86: xc/config/cf/darwin.cf,v 1.21.2.1 2002/05/03 00:36:17
 #ifndef OSName
 #define OSName                  DefaultOSName
 #endif
+#ifndef OSVendor
+#define OSVendor                Apple Computer, Inc.
+#endif
 #ifndef OSMajorVersion
 #define OSMajorVersion          DefaultOSMajorVersion
 #endif
@@ -21,10 +24,6 @@ XCOMM platform:  $XFree86: xc/config/cf/darwin.cf,v 1.21.2.1 2002/05/03 00:36:17
 XCOMM operating system:  OSName (OSMajorVersion./**/OSMinorVersion./**/OSTeenyVersion)
 
 #define VarDirectory ProjectRoot/lib
-
-#if OSMajorVersion < 7
-#       define Jaguar 1
-#endif
 
 /*
  * Define the operating system's capabilities
@@ -44,7 +43,7 @@ XCOMM operating system:  OSName (OSMajorVersion./**/OSMinorVersion./**/OSTeenyVe
 #endif
 
 /* Libtool on Darwin always uses minor numbers */
-#define LibtoolMinorVersions	YES
+#define LibtoolMinorVersions    YES
 
 /* The most common file system, HFS+, is not case sensitive. */
 #ifndef CaseSensitiveFileSystem
@@ -76,7 +75,7 @@ XCOMM operating system:  OSName (OSMajorVersion./**/OSMinorVersion./**/OSTeenyVe
 
 #define MkdirHierCmd            mkdir -p
 
-/* our cpp isn't in /lib/cpp and it doesn't like -undef */
+/* Our cpp isn't in /lib/cpp and it doesn't like -undef. */
 #define CppCmd                  /usr/bin/cpp
 #define RawCppCmd               CppCmd
 
@@ -88,19 +87,13 @@ XCOMM operating system:  OSName (OSMajorVersion./**/OSMinorVersion./**/OSTeenyVe
 #define CplusplusCmd            /usr/bin/c++
 #endif
 
-#ifdef Jaguar
-/* jaguar only of course */
-#define NoLocalWchar
-#define NoLocalLangInfo
-#endif
-
 /* default flags to pass to cc */
 #ifndef DefaultCCOptions
 #if XFree86Devel
 # define DefaultCCOptions       -Wall -Wpointer-arith -Wstrict-prototypes \
-				-Wmissing-prototypes -Wmissing-declarations \
-				-Wredundant-decls -Wnested-externs \
-				-no-cpp-precomp
+                                -Wmissing-prototypes -Wmissing-declarations \
+                                -Wredundant-decls -Wnested-externs \
+                                -no-cpp-precomp
 #else
 # define DefaultCCOptions       -Wall -Wpointer-arith -no-cpp-precomp
 #endif
@@ -111,8 +104,47 @@ XCOMM operating system:  OSName (OSMajorVersion./**/OSMinorVersion./**/OSTeenyVe
 # define LibraryCCOptions       DefaultCCOptions -fno-common
 #endif
 
-#define OptimizedCDebugFlags	-O2
-#define ByteOrder		UNKNOWN_BYTE_ORDER
+#ifdef PpcDarwinArchitecture
+# define DarwinMachineDefines   -D__powerpc__
+# if HasGcc3
+#  define OptimizedCDebugFlags  -Os
+# else
+#  define OptimizedCDebugFlags  -O2
+# endif
+# define ByteOrder              X_BIG_ENDIAN
+#endif /* PpcDarwinArchitecture */
+
+#ifdef i386DarwinArchitecture
+# define DarwinMachineDefines   -D__i386__
+# if HasGcc3
+#  define OptimizedCDebugFlags  -Os
+# else
+#  define OptimizedCDebugFlags  -O2 -fno-strength-reduce
+# endif
+# define ByteOrder              X_LITTLE_ENDIAN
+#endif /* i386DarwinArchitecture */
+
+
+#ifdef x86_64DarwinArchitecture
+# define DarwinMachineDefines   -D__x86_64__
+# if HasGcc3
+#  define OptimizedCDebugFlags  -Os
+# else
+#  define OptimizedCDebugFlags  -O2 -fno-strength-reduce
+# endif
+# define ByteOrder              X_LITTLE_ENDIAN
+#endif /* x86_64DarwinArchitecture */
+
+
+
+#if OSMajorVersion < 7
+# define Jaguar 1
+# define NoLocalWchar
+# define NoLocalLangInfo
+# define DarwinLocaleDefines    -DX_LOCALE
+#else
+# define DarwinLocaleDefines    /**/
+#endif
 
 /*
  * __DARWIN__ will be used for platform specific #ifdefs that can't
@@ -120,20 +152,21 @@ XCOMM operating system:  OSName (OSMajorVersion./**/OSMinorVersion./**/OSTeenyVe
  *
  * Darwin's alloca() seg faults (rather than returning NULL) on failed
  * allocations, so we can't use it.
- *
- * Darwin's setlocale() doesn't work properly, so use X11's instead.
  */
-#define StandardDefines         -D__DARWIN__ -DNO_ALLOCA -DX_LOCALE
+#define StandardDefines         DarwinMachineDefines -D__DARWIN__ \
+                                -DNO_ALLOCA -DCSRG_BASED DarwinLocaleDefines
 
 /*
  * Set this to NO to just build the client libs, which should work without
  * having to write any platform specific code.
  */
+#ifndef BuildServer
 #define BuildServer             YES
 
 /* our custom X server */
 # define XDarwinServer          NO
-# define XAppleServer		YES
+# define XAppleServer           YES
+#endif
 
 /* Thanks to the IOKit, the X server does not have to be SetUID. */
 #ifndef InstallXserverSetUID
@@ -143,8 +176,10 @@ XCOMM operating system:  OSName (OSMajorVersion./**/OSMinorVersion./**/OSTeenyVe
 /* no direct graphics extension */
 #define BuildXF86DGA            NO
 
-/* no server support for extra tablets and weird input devices */
-#define BuildXInputExt          NO
+/* Support for tablets and other non-standard input devices */
+#ifndef BuildXInputExt
+#define BuildXInputExt          YES
+#endif
 #define BuildXInputLib          YES
 
 /* no Display Power Management extension */
@@ -188,9 +223,6 @@ WCHARINCL=-I${TOP}/extras/wchar/h
 
 /* Also, Imakefiles use XPLUGIN_INCLUDE for include flags */
 XPLUGIN_LIB = $(XPLUGIN_LIBDIR) -lXplugin
-
-#define InstallCmd   sudo install
-#define InstallFlags -c -o root -g admin
 
 EXTRA_FREETYPE2_REQUIREDLIBS = -framework CoreServices \
 	-framework ApplicationServices
