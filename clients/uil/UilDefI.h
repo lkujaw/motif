@@ -54,7 +54,7 @@
 
 #define X_INCLUDE_TIME_H
 #define XOS_USE_XT_LOCKING
-#include <X11/Xos_r.h>		/* for _Xctimeparams */
+#include <Xm/XmosR.h>              /* for _Xctimeparams */
 
 #include <Mrm/MrmAppl.h>
 #include <Mrm/Mrm.h>

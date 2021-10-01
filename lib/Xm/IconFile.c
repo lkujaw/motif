@@ -62,7 +62,7 @@
 
 #define X_INCLUDE_DIRENT_H
 #define XOS_USE_XT_LOCKING
-#include <X11/Xos_r.h>
+#include <Xm/XmosR.h>
 
 #include <fcntl.h>
 #include <sys/stat.h>

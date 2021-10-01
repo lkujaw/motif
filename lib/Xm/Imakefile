@@ -55,6 +55,20 @@ REGEX_DEFINES = -DUSE_LOCAL_REGEX
 REGEX_DEFINES =
 #endif
 
+#ifndef UseLocalXosR
+# define UseLocalXosR	NO
+#endif
+
+#if UseLocalXosR
+XmosR.h: XmosR.hin
+	$(RM) XmosR.h
+	$(CP) XmosR.hin XmosR.h
+#else
+XmosR.h: $(XTOP)/include/X11/Xos_r.h
+	$(RM) XmosR.h
+	$(CP) $(XTOP)/include/X11/Xos_r.h XmosR.h
+#endif
+
 DEPEND_DEFINES = $(REGEX_DEFINES)
 
     LINTLIBS = $(LINTXLIB) $(LINTXTOOL)
@@ -64,51 +78,51 @@ SRCH_DEFINES = -DLIBDIR=\"$(XPROJECTROOT)/lib/X11\" -DINCDIR=\"$(XPROJECTROOT)/i
 BINDINGS_DEF = -DXMBINDDIR_FALLBACK=\"VirtualBindingsPath\"
 STRINGSABIOPTIONS = ToolkitStringsABIOptions
 
-HEADERS = ArrowB.h      ArrowBG.h       ArrowBGP.h      ArrowBP.h \
-        BulletinB.h     BulletinBP.h    CacheP.h        CascadeB.h \
-        CascadeBG.h     CascadeBGP.h    CascadeBP.h     Command.h \
-        CommandP.h      CutPaste.h      DialogS.h \
-        DialogSP.h      DialogSEP.h     DragC.h         DragCP.h \
-        DragDrop.h      DragIcon.h      DragIconP.h     DragOverS.h \
-        DragOverSP.h    DropTransP.h    DropSMgr.h      DropSMgrP.h \
-        DropTrans.h     DrawingA.h      DrawingAP.h     DrawnB.h \
-        DrawnBP.h       FileSB.h        FileSBP.h       Form.h \
-        FormP.h         Frame.h         FrameP.h        Label.h \
-        LabelG.h        LabelGP.h       LabelP.h        List.h \
-        ListP.h         MainW.h         MainWP.h        MenuShell.h \
-        MenuShellP.h    MessageB.h      MessageBP.h     PanedW.h \
-        PanedWP.h       PushB.h         PushBG.h        PushBGP.h \
-        PushBP.h        RCLayoutP.h     RowColumn.h     RowColumnP.h \
-        SashP.h         Scale.h         ScaleP.h        ScrollBar.h \
-        ScrollBarP.h    ScrolledW.h     ScrolledWP.h    SelectioB.h \
-        SelectioBP.h    SeparatoG.h     SeparatoGP.h    Separator.h \
-        SeparatorP.h    TextF.h         TextFP.h        TextFSelP.h \
-        TextSelP.h      Text.h          TextInP.h       TextOutP.h \
-        TextP.h         TextStrSoP.h    ToggleB.h       ToggleBG.h \
-        ToggleBGP.h     ToggleBP.h      Xm.h            XmP.h \
-        BaseClassP.h    ManagerP.h      PrimitiveP.h    GadgetP.h \
-        XmStrDefs.h     VaSimpleP.h     VirtKeys.h      VirtKeysP.h \
-        ExtObjectP.h    Display.h       DisplayP.h      Screen.h \
-        ScreenP.h       ShellEP.h       VendorS.h       VendorSP.h \
-        VendorSEP.h     DesktopP.h      AtomMgr.h \
-        Protocols.h     ProtocolsP.h    MwmUtil.h       TransltnsP.h \
-        RepType.h       XmosP.h         DrawP.h         TearOffP.h \
-        TearOffBP.h     MenuUtilP.h     MenuT.h         XmAll.h \
-        TraitP.h        SpinB.h         SpinBP.h        SSpinB.h \
-        SSpinBP.h \
-        Container.h     ContainerP.h    IconG.h         IconGP.h \
-        Notebook.h      NotebookP.h     ContItemT.h     ContainerT.h \
-        RCMenuP.h       ClipWindowP.h   TransferT.h \
-        Transfer.h      AccTextT.h      NavigatorT.h    IconFileP.h\
-        ScrollFrameT.h  GrabShell.h     GrabShellP.h    ComboBox.h \
-        ComboBoxP.h     XmIm.h          IconFile.h      AccColorT.h\
-        ActivatableT.h  JoinSideT.h     SpecRenderT.h \
-        CareVisualT.h   DialogSavvyT.h  TransferP.h     TakesDefT.h \
-        ColorP.h        Primitive.h     Manager.h \
-        Gadget.h        LayoutT.h       IconH.h         IconHP.h \
-        UnitTypeT.h     TxtPropCv.h     MenuProcP.h     MenuStateP.h\
-        ColorObjP.h     TravConT.h      UnhighlightT.h  PointInT.h \
-        Print.h         PrintSP.h       XpmP.h		Xmfuncs.h
+HEADERS = \
+        AccColorT.h     AccTextT.h      ActivatableT.h  ArrowB.h         \
+        ArrowBG.h       ArrowBGP.h      ArrowBP.h       AtomMgr.h        \
+        BaseClassP.h    BulletinB.h     BulletinBP.h    CacheP.h         \
+        CareVisualT.h   CascadeB.h      CascadeBG.h     CascadeBGP.h     \
+        CascadeBP.h     ClipWindowP.h   ColorObjP.h     ColorP.h         \
+        ComboBox.h      ComboBoxP.h     Command.h       CommandP.h       \
+        ContItemT.h     Container.h     ContainerP.h    ContainerT.h     \
+        CutPaste.h      DesktopP.h      DialogS.h       DialogSEP.h      \
+        DialogSP.h      DialogSavvyT.h  Display.h       DisplayP.h       \
+        DragC.h         DragCP.h        DragDrop.h      DragIcon.h       \
+        DragIconP.h     DragOverS.h     DragOverSP.h    DrawP.h          \
+        DrawingA.h      DrawingAP.h     DrawnB.h        DrawnBP.h        \
+        DropSMgr.h      DropSMgrP.h     DropTrans.h     DropTransP.h     \
+        ExtObjectP.h    FileSB.h        FileSBP.h       Form.h           \
+        FormP.h         Frame.h         FrameP.h        Gadget.h         \
+        GadgetP.h       GrabShell.h     GrabShellP.h    IconFile.h       \
+        IconFileP.h     IconG.h         IconGP.h        IconH.h          \
+        IconHP.h        JoinSideT.h     Label.h         LabelG.h         \
+        LabelGP.h       LabelP.h        LayoutT.h       List.h           \
+        ListP.h         MainW.h         MainWP.h        Manager.h        \
+        ManagerP.h      MenuProcP.h     MenuShell.h     MenuShellP.h     \
+        MenuStateP.h    MenuT.h         MenuUtilP.h     MessageB.h       \
+        MessageBP.h     MwmUtil.h       NavigatorT.h    Notebook.h       \
+        NotebookP.h     PanedW.h        PanedWP.h       PointInT.h       \
+        Primitive.h     PrimitiveP.h    Print.h         PrintSP.h        \
+        Protocols.h     ProtocolsP.h    PushB.h         PushBG.h         \
+        PushBGP.h       PushBP.h        RCLayoutP.h     RCMenuP.h        \
+        RepType.h       RowColumn.h     RowColumnP.h    SSpinB.h         \
+        SSpinBP.h       SashP.h         Scale.h         ScaleP.h         \
+        Screen.h        ScreenP.h       ScrollBar.h     ScrollBarP.h     \
+        ScrollFrameT.h  ScrolledW.h     ScrolledWP.h    SelectioB.h      \
+        SelectioBP.h    SeparatoG.h     SeparatoGP.h    Separator.h      \
+        SeparatorP.h    ShellEP.h       SpecRenderT.h   SpinB.h          \
+        SpinBP.h        TakesDefT.h     TearOffBP.h     TearOffP.h       \
+        Text.h          TextF.h         TextFP.h        TextFSelP.h      \
+        TextInP.h       TextOutP.h      TextP.h         TextSelP.h       \
+        TextStrSoP.h    ToggleB.h       ToggleBG.h      ToggleBGP.h      \
+        ToggleBP.h      TraitP.h        Transfer.h      TransferP.h      \
+        TransferT.h     TransltnsP.h    TravConT.h      TxtPropCv.h      \
+        UnhighlightT.h  UnitTypeT.h     VaSimpleP.h     VendorS.h        \
+        VendorSEP.h     VendorSP.h      VirtKeys.h      VirtKeysP.h      \
+        Xm.h            XmAll.h         XmIm.h          XmP.h            \
+        XmStrDefs.h     Xmfuncs.h       XmosP.h         XmosR.h          \
+        XpmP.h
 
 SRCS1 = ArrowB.c        ArrowBG.c       BulletinB.c     CallbackI.c \
         CascadeB.c      CascadeBG.c     Command.c       CutPaste.c \
@@ -232,7 +246,7 @@ NEW_WID_OBJS = /**/
 #else
 NEW_WID_OBJS =             IconH.o         Container.o     IconG.o  \
            Notebook.o      ComboBox.o      GrabShell.o     SpinB.o  \
-           SSpinB.o        TxtPropCv.o     XmStringSeg.o   TranslNew.o  
+           SSpinB.o        TxtPropCv.o     XmStringSeg.o   TranslNew.o
 #endif
 
    SRCS3 = $(OBSO_SRCS) $(XPM_SRCS) $(REGEX_SRCS) $(NEW_WID_SRCS)
@@ -287,3 +301,6 @@ Obso1_2.o:
 MessageCatalogRule(Xm)
 
 LinkFileList(includes,Xm.ad,$(BUILDLOCDIR),$(BUILDINCTOP)/$(CURRENT_DIR))
+
+clean::
+	$(RM) XmosR.h

@@ -42,6 +42,7 @@ localized/util/mkmsgcat
 lib/Xm/XmStrDefs.c
 lib/Xm/XmStrDefs.h
 lib/Xm/XmStrDefsI.h
+lib/Xm/XmosR.h
 
 # Motif Window Manager
 clients/mwm/mwm

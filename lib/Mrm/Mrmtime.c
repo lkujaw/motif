@@ -56,7 +56,7 @@ static char rcsid[] = "$XConsortium: Mrmtime.c /main/19 1996/11/21 20:03:40 drk 
 
 #define X_INCLUDE_TIME_H
 #define XOS_USE_XT_LOCKING
-#include <X11/Xos_r.h>
+#include <Xm/XmosR.h>
 
 
 /*
@@ -110,4 +110,3 @@ Urm__UT_Time (char		*time_stg)
   else
     *time_stg = 0;
 }
-
