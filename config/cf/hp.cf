@@ -1,4 +1,4 @@
-XCOMM platform:  $TOG: hp.cf /main/85 1997/04/17 14:11:34 barstow $
+XCOMM platform:  $Xorg: hp.cf,v 1.5 2000/08/17 19:41:47 cpqbld Exp $
 
 #ifndef OSName
 # define OSName		DefaultOSName
@@ -32,11 +32,11 @@ XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
  *    configuration variables used here.
  *
  * === C++ Compiler Setup ==========================================
- * 
+ *
  * For HP C++, define HasHPCplusplus to YES in site.def.
  * For CenterLine C++, define HasCenterLineCplusplus to YES in site.def.
  * For GNU g++ 2.x or later, define HasGcc2ForCplusplus to YES in site.def.
- * For other compilers, define HasCplusplus to YES in site.def, and 
+ * For other compilers, define HasCplusplus to YES in site.def, and
  *    check to see if you need to provide values for CplusplusOptions
  *    and/or DefaultCplusplusOptions.
  *
@@ -71,7 +71,6 @@ XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
 # endif
 #endif /* HasHPC */
 
-
 #if HasHPCplusplus
 # ifndef  HasCplusplus
 #  define HasCplusplus YES
@@ -85,10 +84,10 @@ XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
 # ifndef  CplusplusCmd
 #  define CplusplusCmd 			/opt/CC/bin/CC
 # endif
-# ifndef  CplusplusDependIncludes 
+# ifndef  CplusplusDependIncludes
 #  define CplusplusDependIncludes	-I/opt/CC/include/CC
 # endif
-#endif
+#endif /* HasHPCplusplus */
 
 
 #if HasCenterLineC
@@ -104,7 +103,7 @@ XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
 # ifndef OptimizedCplusplusDebugFlags
 #  define OptimizedCplusplusDebugFlags	-O
 # endif
-# ifndef CplusplusDependIncludes 
+# ifndef CplusplusDependIncludes
 #  define CplusplusDependIncludes -I/usr/local/CenterLine/clc++/pa-hpux8/incl
 # endif
 #endif
@@ -229,7 +228,7 @@ XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
 #  define MTSafeAPIDefines	-DXUSE_MTSAFE_API -DXUSE_NETDB_R_API
 # endif
 # ifndef CppCmd
-#  define CppCmd			/usr/ccs/lbin/cpp
+#  define CppCmd		/usr/ccs/lbin/cpp
 # endif
 #endif
 
