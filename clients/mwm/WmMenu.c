@@ -841,8 +841,8 @@ static MenuItem *MakeMenuItemFromTemplate (MenuItem *template, String name,
 static MenuItem *MakeClientCommandMenuItem (String label, String funcArgs)
 {
     return(MakeMenuItem(label, F_InvokeCommand, funcArgs,
-			(KeySym) NULL, (unsigned int)0,
-			(KeyCode) NULL, (String)NULL));
+			(KeySym)NULL, (unsigned int)0,
+			(KeyCode)0, (String)NULL));
 }
 
 
