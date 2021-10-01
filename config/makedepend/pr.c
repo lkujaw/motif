@@ -69,7 +69,7 @@ add_include(filep, file, file_red, include, dot, failOK)
 		included_by(file, newfile);
 		if (!(newfile->i_flags & SEARCHED)) {
 			newfile->i_flags |= SEARCHED;
-			content = getfile(newfile->i_file);
+			content = get_file(newfile->i_file);
 			find_includes(content, newfile, file_red, 0, failOK);
 			freefile(content);
 		}

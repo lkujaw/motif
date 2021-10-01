@@ -137,11 +137,11 @@ char			*realloc();
 
 char			*copy();
 char			*base_name();
-char			*getline();
+char			*get_line();
 struct symtab		**slookup();
 struct symtab		**isdefined();
 struct symtab		**fdefined();
-struct filepointer	*getfile();
+struct filepointer	*get_file();
 struct inclist		*newinclude();
 struct inclist		*inc_path();
 

@@ -453,7 +453,7 @@ int main(argc, argv)
 	 * now peruse through the list of files.
 	 */
 	for(fp=filelist; *fp; fp++) {
-		filecontent = getfile(*fp);
+		filecontent = get_file(*fp);
 		ip = newinclude(*fp, (char *)NULL);
 
 		find_includes(filecontent, ip, ip, 0, FALSE);
@@ -481,7 +481,7 @@ static int elim_cr(char *buf, int sz)
 }
 #endif
 
-struct filepointer *getfile(file)
+struct filepointer *get_file(file)
 	char	*file;
 {
 	register int	fd;
@@ -545,7 +545,7 @@ int match(str, list)
  * Get the next line.  We only return lines beginning with '#' since that
  * is all this program is ever interested in.
  */
-char *getline(filep)
+char *get_line(filep)
 	register struct filepointer	*filep;
 {
 	register char	*p,	/* walking pointer */
