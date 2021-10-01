@@ -42,7 +42,9 @@ XCOMM $XFree86: xc/config/cf/svr4.cf,v 3.25.2.2 1997/07/05 15:55:30 dawes Exp $
 
 /* Some stuff that all SVR4s should have */
 
+#ifndef SystemV4
 #define SystemV4		YES
+#endif
 #ifndef HasLdRunPath
 #define HasLdRunPath		YES
 #endif

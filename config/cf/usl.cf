@@ -20,17 +20,27 @@ XCOMM platform:  $XFree86: xc/config/cf/usl.cf,v 3.13.2.1 1997/05/03 09:43:10 da
 XCOMM operating system: OSName (OSMajorVersion./**/OSMinorVersion./**/OSTeenyVersion)
 
 #ifndef  CcCmd
-# define CcCmd			/usr/ccs/bin/cc
+# define CcCmd				/usr/ccs/bin/cc
 #endif
 #ifndef  CplusplusCmd
-# define CplusplusCmd		/usr/ccs/bin/CC
+# define CplusplusCmd			/usr/ccs/bin/CC
 #endif
 #ifndef  CplusplusFilt
-# define CplusplusFilt		/usr/ccs/bin/c++filt
+# define CplusplusFilt			/usr/ccs/bin/c++filt
 #endif
 #ifndef  CplusplusDependIncludes
 # define CplusplusDependIncludes	-I/usr/include/CC
 #endif
+#ifndef  YaccCmd
+# define YaccCmd			/usr/ccs/bin/yacc
+#endif
+#ifndef  LexCmd
+# define LexCmd				/usr/ccs/bin/lex
+#endif
+#ifndef  LexLib
+# define LexLib				-ll
+#endif
+
 
 #define BootstrapCFlags		/* none needed */
 #define StandardDefines		-DUSL -DSVR4 -Di386

@@ -12,6 +12,5 @@
 #define DebugLibXm              YES
 #define DebugLibMrm             YES
 #define DebugLibUil             YES
-#define LexLib                  -lfl
 
 #endif /* BeforeVendorCF */
