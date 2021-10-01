@@ -23,10 +23,18 @@ XCOMM $XConsortium: hpLib.rules /main/16 1996/12/04 11:44:35 swick $
 # define SharedLibraryLoadFlags -b
 #endif
 #ifndef PositionIndependentCFlags
-# define PositionIndependentCFlags +z
+# if HasGcc2
+#  define PositionIndependentCFlags -fpic
+# else
+#  define PositionIndependentCFlags +z
+# endif
 #endif
 #ifndef LargePositionIndependentCFlags
-# define LargePositionIndependentCFlags +Z
+# if HasGcc2
+#  define LargePositionIndependentCFlags -fPIC
+# else
+#  define LargePositionIndependentCFlags +Z
+# endif
 #endif
 #ifndef InstLibFlags
 # define InstLibFlags -m 0555

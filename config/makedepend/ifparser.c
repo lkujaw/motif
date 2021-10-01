@@ -60,10 +60,10 @@
  *     ParseIfExpression		parse a string for #if
  */
 
-#include "ifparser.h"
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include "ifparser.h"
 
 /****************************************************************************
 		   Internal Macros and Utilities for Parser
