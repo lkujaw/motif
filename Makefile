@@ -1,1 +1,1 @@
-:MAKE: config/util localized/util - lib/Xm
+:MAKE: config/util localized/util - lib/Xm - lib/Mrm

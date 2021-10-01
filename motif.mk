@@ -1,5 +1,7 @@
 :PACKAGE: X11
 
+.SOURCE.h : $(ROOT)/lib
+
 GENCAT    = gencat
 MAKESTRS  = $(ROOT)/config/util/makestrs
 MKCATDEFS = $(ROOT)/localized/util/mkcatdefs
