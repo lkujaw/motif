@@ -15,9 +15,6 @@ XCOMM platform:  $Xorg: hp.cf,v 1.5 2000/08/17 19:41:47 cpqbld Exp $
 XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
 
 
-/* The default yacc options are too small for Uil.y. */
-#define YaccFlags -Nm15000
-
 /*
  * Compiler setup.  This hp.cf file knows what options to use with
  * certain compilers, including HP C, CenterLine C, and gcc.
@@ -63,6 +60,8 @@ XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
 # ifndef  YaccCmd
 #  define YaccCmd		/opt/langtools/bin/yacc
 # endif
+/* The default yacc options are too small for Uil.y. */
+# define YaccFlags		-Nm15000
 # ifndef  LexCmd
 #  define LexCmd		/opt/langtools/bin/lex
 # endif
@@ -92,7 +91,7 @@ XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
 
 #if HasCenterLineC
 # ifndef CcCmd
-#  define CcCmd clcc
+#  define CcCmd			clcc
 # endif
 #endif
 
@@ -104,14 +103,17 @@ XCOMM operating system:  OSName (OSMajorVersion.OSMinorVersion.OSTeenyVersion)
 #  define OptimizedCplusplusDebugFlags	-O
 # endif
 # ifndef CplusplusDependIncludes
-#  define CplusplusDependIncludes -I/usr/local/CenterLine/clc++/pa-hpux8/incl
+#  define CplusplusDependIncludes	-I/usr/local/CenterLine/clc++/pa-hpux8/incl
 # endif
 #endif
 
 
 #if HasGcc2
 # ifndef CcCmd
-#  define CcCmd gcc
+#  define CcCmd				gcc
+# endif
+# ifndef LexCmd
+#  define LexCmd			flex
 # endif
 #endif
 

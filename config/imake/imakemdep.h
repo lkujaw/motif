@@ -42,8 +42,8 @@
 #define imake_ccflags "-O -DSYSV -DBOOTSTRAPCFLAGS=-DSYSV"
 #endif
 
-#ifdef hpux
-#ifdef hp9000s800
+#if defined(hpux) || defined(__hpux)
+#if defined(hp9000s800) || defined(__hp9000s800)
 #define imake_ccflags "-DSYSV"
 #else
 #define imake_ccflags "-Wc,-Nd4000,-Ns3000 -DSYSV"
@@ -218,7 +218,7 @@
  *     all colons).  One way to tell if you need this is to see whether or not
  *     your Makefiles have no tabs in them and lots of @@ strings.
  */
-#if defined(sun) || defined(SYSV) || defined(SVR4) || defined(hcx) || defined(WIN32) || defined(__APPLE__) || defined(sco) || defined(__hpux) || (defined(AMOEBA) && defined(CROSS_COMPILE))
+#if defined(sun) || defined(SYSV) || defined(SVR4) || defined(hcx) || defined(WIN32) || defined(__APPLE__) || defined(sco) || (defined(AMOEBA) && defined(CROSS_COMPILE))
 #define FIXUP_CPP_WHITESPACE
 #endif
 #ifdef WIN32
@@ -236,7 +236,7 @@
  *     If use cc -E but want a different compiler, define DEFAULT_CC.
  *     If the cpp you need is not in /lib/cpp, define DEFAULT_CPP.
  */
-#ifdef hpux
+#if defined(hpux) || defined(__hpux)
 #define USE_CC_E
 #endif
 #ifdef WIN32
@@ -328,7 +328,7 @@ char *cpp_argv[ARGUMENTS] = {
 	"-Uunix",	/* remove unix symbol so that filename unix.c okay */
 #endif
 #endif
-#if defined(__386BSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__FreeBSD__) || defined(MACH) || defined(linux) || defined(__GNU__) || defined(__bsdi__)
+#if defined(__386BSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__FreeBSD__) || defined(MACH) || defined(linux) || defined(__GNU__) || defined(__GNUC__) || defined(__bsdi__)
 # ifdef __i386__
 	"-D__i386__",
 # endif
@@ -346,6 +346,9 @@ char *cpp_argv[ARGUMENTS] = {
 # endif
 # ifdef __m68k__
 	"-D__m68k__",
+# endif
+# ifdef __hppa__
+	"-D__hppa__",
 # endif
 # ifdef __GNUC__
 	"-traditional",
@@ -644,7 +647,7 @@ char *cpp_argv[ARGUMENTS] = {
 # define DEFAULT_OS_MINOR_REV	"r %*d.%[0-9]"
 # define DEFAULT_OS_TEENY_REV	"r %*d.%*d.%[0-9]"
 # define DEFAULT_OS_NAME	"srm %[^\n]"
-#elif defined(hpux)
+#elif defined(hpux) || defined(__hpux)
 /* uname -r returns "W.x.yz", e.g. "B.10.01" */
 # define DEFAULT_OS_MAJOR_REV	"r %*[^.].%[0-9]"
 # define DEFAULT_OS_MINOR_REV	"r %*[^.].%*d.%1s"
