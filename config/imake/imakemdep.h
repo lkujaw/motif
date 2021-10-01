@@ -323,9 +323,15 @@ char *cpp_argv[ARGUMENTS] = {
 	"-Uunix",	/* remove unix symbol so that filename unix.c okay */
 #endif
 #endif
-#if defined(__386BSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__FreeBSD__) || defined(MACH) || defined(linux) || defined(__GNU__)
+#if defined(__386BSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__FreeBSD__) || defined(MACH) || defined(linux) || defined(__GNU__) || defined(__bsdi__)
 # ifdef __i386__
 	"-D__i386__",
+# endif
+# ifdef __ia64__
+        "-D__ia64__",
+# endif
+# ifdef __alpha__
+        "-D__alpha__",
 # endif
 # ifdef __sparc__
 	"-D__sparc__",
