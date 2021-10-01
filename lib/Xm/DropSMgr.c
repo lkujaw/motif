@@ -598,7 +598,7 @@ RegisterInfo(
     if (_XmHashTableCount(tab) > (2 * _XmHashTableSize(tab)))
       _XmResizeHashTable(tab, 2 * _XmHashTableSize(tab));
     
-    _XmAddHashEntry(tab, widget, info);
+    _XmAddHashEntry(tab, (XmHashKey) widget, info);
     _XmProcessUnlock();
 
     SetDSRegistered(info, True);
@@ -626,7 +626,7 @@ UnregisterInfo(
     iterator = NULL;
 
     _XmProcessLock();
-    while((data = _XmGetHashEntryIterate(tab, widget, &iterator)) != NULL)
+    while((data = _XmGetHashEntryIterate(tab, (XmHashKey) widget, &iterator)) != NULL)
       {
 	if (data == info) {
 	  _XmRemoveHashIterator(tab, &iterator);
@@ -648,7 +648,7 @@ WidgetToInfo(
     
   tab = DSTABLE(dsm);
 
-  info = (XmDSInfo) _XmGetHashEntry(tab, widget);
+  info = (XmDSInfo) _XmGetHashEntry(tab, (XmHashKey) widget);
 
   return((XtPointer) info);
 }
@@ -1000,7 +1000,7 @@ RemoveClipper(
   /*
    * Destroy the clipper
    */
-  DSMUnregisterInfo(dsm, clipper);
+  DSMUnregisterInfo(dsm, (XtPointer) clipper);
   DestroyDSInfo(clipper, True);
 }
 
@@ -3806,7 +3806,7 @@ UpdateInfo(
 		SetDSRegistered(new_info, False);
 
 		/* Remove the old one from the hash table */
-		DSMUnregisterInfo(dsm, info);
+		DSMUnregisterInfo(dsm, (XtPointer) info);
 
 		/* Replace the old one in the drop site tree */
 		ReplaceDSChild(info, new_info);

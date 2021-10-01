@@ -585,7 +585,7 @@ _XmAddTearOffEventHandlers(
     {
 	child = rc->composite.children[i];
 
-	mtrait = (XmMenuSavvyTrait) XmeTraitGet(XtClass(child), XmQTmenuSavvy);
+	mtrait = (XmMenuSavvyTrait) XmeTraitGet((XtPointer) XtClass(child), XmQTmenuSavvy);
 
 	/*
 	 * The label and separator widgets do not care about

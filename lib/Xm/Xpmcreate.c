@@ -799,6 +799,11 @@ XpmCreateImageFromXpmImage(display, image,
 
     ErrorStatus = XpmSuccess;
 
+    /* X.org security patch 0687 */
+    if (image->ncolors >= SIZE_MAX / sizeof(Pixel))
+    	return (XpmNoMemory);
+    /* END: X.org security patch 0687 */
+
     /* malloc pixels index tables */
     image_pixels = (Pixel *) XpmMalloc(sizeof(Pixel) * image->ncolors);
     if (!image_pixels)
@@ -941,7 +946,12 @@ CreateXImage(display, visual, depth, format, width, height, image_return)
     if (!*image_return)
 	return (XpmNoMemory);
 
-#ifndef FOR_MSW
+#if   !defined(FOR_MSW) && !defined(AMIGA)
+    /* X.org security patch 0687 */
+    if (height != 0 && (*image_return)->bytes_per_line >= SIZE_MAX / height)
+	return XpmNoMemory;
+    /* END: X.org security patch 0687 */
+
     /* now that bytes_per_line must have been set properly alloc data */
     (*image_return)->data =
 	(char *) XpmMalloc((*image_return)->bytes_per_line * height);
@@ -1986,6 +1996,11 @@ xpmParseDataAndCreate(display, data, image_return, shapeimage_return,
     if (cmts)
 	xpmGetCmt(data, &colors_cmt);
 
+    /* X.org security patch 0687 */
+    if (ncolors >= SIZE_MAX / sizeof(Pixel))
+    	return XpmNoMemory;
+    /* END: X.org security patch 0687 */
+
     /* malloc pixels index tables */
     image_pixels = (Pixel *) XpmMalloc(sizeof(Pixel) * ncolors);
     if (!image_pixels)
@@ -2200,6 +2215,11 @@ ParseAndPutPixels(dc, data, width, height, ncolors, cpp, colorTable, hashtable,
 	{
 	    unsigned short colidx[256];
 
+    	    /* X.org security patch 0687 */
+	    if (ncolors > 256)
+		return (XpmFileInvalid);
+    	    /* END: X.org security patch 0687 */
+
 	    bzero((char *)colidx, 256 * sizeof(short));
 	    for (a = 0; a < ncolors; a++)
 		colidx[(unsigned char)colorTable[a].string[0]] = a + 1;
@@ -2297,6 +2317,11 @@ if (cidx[f]) XpmFree(cidx[f]);}
 	{
 	    char *s;
 	    char buf[BUFSIZ];
+
+	    /* X.org security patch 0687 */
+	    if (cpp >= sizeof(buf))
+	    	return (XpmFileInvalid);
+	    /* END: X.org security patch 0687 */
 
 	    buf[cpp] = '\0';
 	    if (USE_HASHTABLE) {

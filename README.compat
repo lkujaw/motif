@@ -1,0 +1,44 @@
+2.2 compatible version
+----------------------
+
+Since becoming open sourced on Linux and other free platforms, a number of incompatibilities have arisen
+between the originally experimental version 2.2.x and the 2.1.x series that is closest to Motif on other platforms,
+and contains many bug fixes that are not in 2.2.x
+
+These incompatibilities meant that an application could not use the robust 2.1.x Motif if it required prebuilt widget
+libraries such as XRT that had been built with 2.2 (the default Motif on Linux distros).
+
+If you follow the instructions below, you can build a version of 2.1.x that is object compatible
+with Motif-based libraries that were built with 2.2
+
+The version is quite safe. It does two extra things:
+
+	* it pads the Motif data structures so that they are identical to those in 2.2
+	* it uses the 2.2 XmString data files for generation of XmString tables
+
+
+1. To build the compatible version, he following environment variables need to be set
+
+export USERCFLAGS="-DM222i=1"
+export USERVARIANT="-22i"
+export USER_IMAKE_DEFINES="-DM222i=1"
+export DEFINES=${USER_IMAKE_DEFINES}
+
+2. Once you install the distribution, you need to replace all of the
+
+#ifdef M222i
+
+lines with
+
+#if 1 /* M222i */
+
+since Motif users will not be using the -DM222i compilation flag.
+
+The files that need changing are:
+
+include/Xm/DropSMgrP.h
+include/Xm/GadgetP.h
+include/Xm/MenuShellP.h
+include/Xm/PrimitiveP.h
+include/Xm/VendorSEP.h
+include/Xm/Xm.h

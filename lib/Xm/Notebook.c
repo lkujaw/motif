@@ -2505,7 +2505,16 @@ int total_major_tabs, top_tab_count, current_tab = 0;
      * Determine tab margin spacing and tab staggering
      */
     spacing = MAX(nb->notebook.major_spacing, nb->notebook.shadow_thickness);
-    delta = nb->notebook.back_page_size / nb->notebook.real_back_page_number;
+
+    /*
+    ** Patch by A.J.Fountain, IST, September 2003.
+    ** real_back_page_number can be zero if you add a Tab before a Page.
+    */
+
+    if (nb->notebook.real_back_page_number != 0)
+    	delta = nb->notebook.back_page_size / nb->notebook.real_back_page_number;
+    else
+	delta = 0;
 
     /*
      * Determine tab positions

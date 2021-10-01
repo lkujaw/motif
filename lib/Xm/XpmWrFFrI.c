@@ -239,6 +239,12 @@ WritePixels(file, width, height, cpp, pixels, colors)
     unsigned int x, y, h;
 
     h = height - 1;
+
+    /* X.org security patch 0687 */
+    if (cpp != 0 && width >= (SIZE_MAX - 3)/cpp)
+    	return XpmNoMemory;
+    /* END: X.org security patch 0687 */
+
     p = buf = (char *) XpmMalloc(width * cpp + 3);
     if (!buf)
 	return (XpmNoMemory);

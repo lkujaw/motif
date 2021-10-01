@@ -1440,9 +1440,9 @@ FixupLibReferences()
         LDPRELIBS = LdPreLibs
        LDPOSTLIBS = LdPostLibs
      TOP_INCLUDES = TopIncludes
-  PROJECT_DEFINES = ProjectDefines
+  PROJECT_DEFINES = ProjectDefines ${USERCFLAGS}
 #if HasCplusplus
-CXXPROJECT_DEFINES = CplusplusProjectDefines
+CXXPROJECT_DEFINES = CplusplusProjectDefines ${USERCFLAGS}
 #endif
 
 XCOMM ----------------------------------------------------------------------

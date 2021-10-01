@@ -1357,7 +1357,7 @@ ListCallback(
 	    XmString temp;
 	    temp = XmCvtByteStreamToXmString((unsigned char *) value);
 	    
-	    textTrait -> setValue(SB_Text(sel), temp, XmFORMAT_XmSTRING);
+	    textTrait -> setValue(SB_Text(sel), (XtPointer) temp, XmFORMAT_XmSTRING);
 	    XmStringFree(temp);
 	  } else if (type == atoms[XmACOMPOUND_TEXT]) {
 	    XmString temp;

@@ -2576,8 +2576,12 @@ static XtPointer
 LabelGetValue(Widget w, int type)
 {
   XmString value;
-  
-  XtVaGetValues(w, XmNlabelString, &value, 0);
+
+  /* Used to read XtVaGetValues(w, XmNlabelString, &value, 0) ; */
+  /* Which is not 64-bit clean (or safe even)                   */
+  /*                                                            */
+  /* A.J.Fountain, IST.                                         */
+  XtVaGetValues(w, XmNlabelString, &value, NULL);
   
   if (type == XmFORMAT_XmSTRING) 
     {

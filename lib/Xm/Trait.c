@@ -165,7 +165,7 @@ XmeTraitGet(XtPointer obj, XrmQuark name)
   entry.name = name;
 
   _XmProcessLock();
-  trait = _XmGetHashEntry(TraitTable, &entry);
+  trait = _XmGetHashEntry(TraitTable, (XmHashKey) &entry);
   _XmProcessUnlock();
 
   return(trait);
@@ -183,11 +183,11 @@ XmeTraitSet(XtPointer object, XrmQuark name, XtPointer data)
 
   _XmProcessLock();
   if (data != NULL) {
-    _XmAddHashEntry(TraitTable, entry, data);
+    _XmAddHashEntry(TraitTable, (XmHashKey) entry, data);
   }
   else { /* if data == NULL then remove the context */
     XtPointer key;
-    key = _XmRemoveHashEntry(TraitTable, entry);
+    key = _XmRemoveHashEntry(TraitTable, (XmHashKey) entry);
     XtFree((char*) entry);
     XtFree((char*) key);
   }

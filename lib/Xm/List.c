@@ -1727,6 +1727,31 @@ SetValues(Widget old,
 	  reset_max = new_size = TRUE;
 	  newlw->list.XOrigin = 0;
 	  newlw->list.CurrentKbdItem = 0;
+
+          /*
+          ** START: SGI PR 840094
+          **
+          ** Truncate a List containing a selection, such that the selection is
+          ** removed from the List items. Then perform an extended select. Core dump.
+          ** This is because the extended selection instance variables are not reset properly.
+          **
+          ** Herewith reset to zero for safety.
+	  ** Using oldlw values is valid because they are reset in DeleteInternalElements()
+	  ** using the FixStartEnd method.
+          **
+          ** A.J.Fountain, IST, May 2004.
+          */
+
+          if (newlw->list.StartItem > newlw->list.itemCount) {
+                newlw->list.StartItem    = oldlw->list.StartItem ;
+                newlw->list.OldStartItem = oldlw->list.OldStartItem ;
+                newlw->list.EndItem      = oldlw->list.EndItem ;
+                newlw->list.OldEndItem   = oldlw->list.OldEndItem ;
+          }
+
+          /*
+          ** END: SGI PR 840094
+          */
 	}
       else
 	{
@@ -7062,7 +7087,7 @@ ListProcessDrag(Widget wid,
   if (dc)
     XtAddCallback(dc, XmNdragDropFinishCallback, DragDropFinished, lw);
   else
-    DragDropFinished(dc, lw, NULL);
+    DragDropFinished(dc, (XtPointer) lw, NULL);
 }
 
 /*

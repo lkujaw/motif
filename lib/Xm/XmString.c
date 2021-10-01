@@ -3384,23 +3384,33 @@ SubStringPosition(
 {
   char *a = (char*) _XmEntryTextGet(seg); 
   char *b = (char*) _XmEntryTextGet(under_seg);
-  char *seg_tag = _XmEntryTag(seg);
   int i, j, k, begin, max, width;
   unsigned int seg_len, under_seg_len;
   Boolean fail;
-  
-  /* Metro Link fix: _XmEntryTag(seg) can be NULL, but the original Motif
-   * code never checked for that.  We check, and if it is NULL, we treat
-   * it as if it was set to XmFONTLIST_DEFAULT_TAG. */
 
-  if (seg_tag == NULL)
-    seg_tag = XmFONTLIST_DEFAULT_TAG;
+  /*
+  ** Patch by A.J.Fountain, IST.
+  **+  ** Multi-line Labels applied to Label Gadgets can go belly up
+  ** since the entry tag on the optimised XmString can turn out NULL.
+  ** Applying strcmp() to this plain core dumps.
+  **
+  ** The following safety code does the trick.
+  */
 
-  if (!((seg_tag == _XmEntryTag(under_seg)) ||
-	((strcmp(seg_tag, XmFONTLIST_DEFAULT_TAG) == 0) &&
-	 _XmStringIsCurrentCharset(_XmEntryTag(under_seg))) ||
-	((strcmp(_XmEntryTag(under_seg), XmFONTLIST_DEFAULT_TAG) == 0) &&
-	 _XmStringIsCurrentCharset(seg_tag))))
+  XmStringTag e1 = _XmEntryTag(seg) ;
+  XmStringTag e2 = _XmEntryTag(under_seg) ;
+
+  if (!e1)
+	e1 = XmFONTLIST_DEFAULT_TAG ;
+
+  if (!e2)
+	e2 = XmFONTLIST_DEFAULT_TAG ;
+
+  if (!((e1 == e2) ||
+	((strcmp(e1, XmFONTLIST_DEFAULT_TAG) == 0) &&
+	 _XmStringIsCurrentCharset(e2)) ||
+	((strcmp(e2, XmFONTLIST_DEFAULT_TAG) == 0) &&
+	 _XmStringIsCurrentCharset(e1))))
     return;
   
   seg_len = _XmEntryByteCountGet(seg);
@@ -5303,7 +5313,7 @@ _XmStringNonOptCreate(
 	  if (_XmEntryTextTypeGet((_XmStringEntry)&seg) == XmNO_TEXT)
 	    _XmEntryTextTypeSet(&seg, prev_type);
 	      
-	  _XmEntryTextSet((_XmStringEntry)&seg, (c + _asn1_size(length)));
+	  _XmEntryTextSet((_XmStringEntry)&seg, (XtPointer) (c + _asn1_size(length)));
 	  _XmUnoptSegByteCount(&seg) = length;
 	  
 	  txt_seen = True;

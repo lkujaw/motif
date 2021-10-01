@@ -254,7 +254,13 @@ SpecialLibObjectRule(VirtKeys.o,,$(BINDINGS_DEF))
 STRINGS_FILES = XmStrDefs.c XmStrDefs.h XmStrDefsI.h
 STRINGS_TMPLS = XmStrDefs.ct XmStrDefs.ht XmStrDefsI.ht
 
-ToolkitMakeStrings($(STRINGS_FILES),xmstring.list,$(STRINGSABIOPTIONS),$(STRINGS_TMPLS),XmStrDefs.c)
+#ifdef M222i
+#define XMSTRING_LIST xmstring.list.22i
+#else
+#define XMSTRING_LIST xmstring.list
+#endif
+
+ToolkitMakeStrings($(STRINGS_FILES),XMSTRING_LIST,$(STRINGSABIOPTIONS),$(STRINGS_TMPLS),XmStrDefs.c)
 
 DependTarget3($(SRCS1),$(SRCS2),$(SRCS3))
 

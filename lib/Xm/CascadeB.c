@@ -1109,7 +1109,7 @@ Select(
 
       if (menuSTrait != NULL)
       {
-	menuSTrait -> entryCallback(XtParent(cb), (Widget) cb, &cback);
+	menuSTrait -> entryCallback(XtParent(cb), (Widget) cb, (XtPointer) &cback);
       }
 
       if ((! cb->label.skipCallback) &&

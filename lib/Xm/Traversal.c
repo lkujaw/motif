@@ -1525,6 +1525,12 @@ XmGetVisibility(
      XDestroyRegion(region);
      XDestroyRegion(tmp_region);
      XDestroyRegion(left_region);
+
+     /*
+     ** Bug patch, memory leak.
+     */
+
+     XFree((Window*)children);
      _XmAppUnlock(app);
      return (value);
   }

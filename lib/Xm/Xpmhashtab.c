@@ -145,6 +145,12 @@ HashTableGrows(table)
     HASH_TABLE_GROWS
 	table->size = size;
     table->limit = size / 3;
+
+    /* X.org security patch 0687 */
+    if (size >= SIZE_MAX / sizeof(*atomTable))
+    	return (XpmNoMemory);
+    /* END: X.org security patch 0687 */
+
     atomTable = (xpmHashAtom *) XpmMalloc(size * sizeof(*atomTable));
     if (!atomTable)
 	return (XpmNoMemory);
@@ -205,6 +211,12 @@ xpmHashTableInit(table)
     table->size = INITIAL_HASH_SIZE;
     table->limit = table->size / 3;
     table->used = 0;
+
+    /* X.org security patch 0687 */
+    if (table->size >= SIZE_MAX / sizeof(*atomTable))
+    	return (XpmNoMemory);
+    /* END: X.org security patch 0687 */
+
     atomTable = (xpmHashAtom *) XpmMalloc(table->size * sizeof(*atomTable));
     if (!atomTable)
 	return (XpmNoMemory);

@@ -33,6 +33,13 @@ static char rcsid[] = "$TOG: Scale.c /main/31 1999/10/13 16:18:07 mgreess $"
 
 #include <stdio.h>
 #include <limits.h>
+
+#ifdef __DARWIN__
+#define CSRG_BASED 1
+#include <unistd.h>
+#include <locale.h>
+#endif
+
 #ifndef CSRG_BASED
 /*
  * Modification by Integrated Computer Solutions, Inc.  May 2000
@@ -60,16 +67,21 @@ static char rcsid[] = "$TOG: Scale.c /main/31 1999/10/13 16:18:07 mgreess $"
 #   undef LC_MONETARY
 #   undef LC_NUMERIC
 #   undef LC_TIME
-#  endif
-# endif
-#else
+#  endif /* linux */
+# endif  /* X_LOCALE */
+#else  /* CSRG_BASED */
+#ifdef NO_LOCAL_LANGINFO
 # define nl_langinfo(radixchar)	"."
 #endif
-#ifdef __cplusplus
+#endif /* CSRG_BASED */
+
+#ifdef    __cplusplus
 extern "C" { /* some 'locale.h' do not have prototypes (sun) */
-#endif
+#endif /* __cplusplus */
+
 #include <X11/Xlocale.h>
-#ifdef __cplusplus
+
+#ifdef    __cplusplus
 } /* Close scope of 'extern "C"' declaration */
 #endif /* __cplusplus */
 
@@ -90,6 +102,22 @@ extern "C" { /* some 'locale.h' do not have prototypes (sun) */
 #include "TransferI.h"
 #include "TraversalI.h"
 #include "XmI.h"
+
+/* FreeBSD port and other odd langinfo problems */
+#ifndef   RADIXCHAR
+#ifdef NO_LOCAL_LANGINFO
+# define nl_langinfo(radixchar)	"."
+#else
+#ifndef   DECIMAL_POINT
+#include  <langinfo.h>
+#endif /* DECIMAL_POINT */
+
+#ifndef   RADIXCHAR
+#define   RADIXCHAR   DECIMAL_POINT
+#endif /* RADIXCHAR */
+#endif /* RADIXCHAR */
+#endif
+/* END FreeBSD port */
 
 #define state_flags last_value
   

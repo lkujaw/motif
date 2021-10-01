@@ -1282,7 +1282,7 @@ set_values(Widget w,
       case XmPER_WIDGET:
 	break;
       default:
-	assert(False);
+	break;
       }
   } else {
     /* Try to modify the existing XIC. */
@@ -2034,15 +2034,19 @@ ImSetGeo(Widget  vw,
 	  rect_preedit.height = icp->sp_height;
         } else if ((use_plist = (icp->input_style & XIMPreeditPosition)) != 0)
         {
-          unsigned int  margin = ((XmPrimitiveWidget)im_info->current_widget)
-                                ->primitive.shadow_thickness
-                            + ((XmPrimitiveWidget)im_info->current_widget)
-                                ->primitive.highlight_thickness;
+		XmPrimitiveWidget prim ;
+		unsigned int      margin ;
 
-          rect_preedit.width = MIN(icp->preedit_width,
-                  XtWidth(im_info->current_widget) - 2*margin);
-          rect_preedit.height = MIN(icp->sp_height,
-                  XtHeight(im_info->current_widget) - 2*margin);
+		if (im_info->current_widget == (Widget) 0) {
+			return ;
+		}
+
+		prim = ((XmPrimitiveWidget)im_info->current_widget) ;
+
+		margin = prim->primitive.shadow_thickness + prim->primitive.highlight_thickness;
+
+          	rect_preedit.width = MIN(icp->preedit_width, XtWidth(prim) - 2*margin);
+		rect_preedit.height = MIN(icp->sp_height, XtHeight(prim) - 2*margin);
 	}
       
       if (use_slist && use_plist)
@@ -2188,7 +2192,11 @@ get_xim_info(Widget  widget)
   XtGetApplicationNameAndClass(dpy, &name, &w_class);
   
   /* Try to open the input method. */
+  /* Lock code from K.Lee, SGI port */
+  _XmProcessLock();
   xim_info->xim = XOpenIM(dpy, XtDatabase(dpy), name, w_class);
+  _XmProcessUnlock();
+
   if (xim_info->xim == NULL)
     {
 #ifdef XOPENIM_WARNING
@@ -2297,6 +2305,10 @@ draw_separator(Widget vw )
   if (!pw || !XmIsPrimitive(pw))
     return;
   
+  /* Colormap check by K.Lee, SGI port */
+  /* Otherwise, non-matching colormaps can raise BadMatch */
+
+  if (vw->core.colormap == pw->core.colormap)
   XmeDrawSeparator(XtDisplay(vw), XtWindow(vw),
 		   pw->primitive.top_shadow_GC,
 		   pw->primitive.bottom_shadow_GC,

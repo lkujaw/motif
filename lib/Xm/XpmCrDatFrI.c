@@ -129,6 +129,12 @@ XpmCreateDataFromXpmImage(data_return, image, info)
      */
     header_nlines = 1 + image->ncolors;
     header_size = sizeof(char *) * header_nlines;
+
+    /* X.org security patch 0687 */
+    if (header_size >= SIZE_MAX / sizeof(char *))
+    	return (XpmNoMemory);
+    /* END: X.org security patch 0687 */
+
     header = (char **) XpmCalloc(header_size, sizeof(char *));
     if (!header)
 	return (XpmNoMemory);

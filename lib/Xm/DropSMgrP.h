@@ -261,7 +261,9 @@ typedef struct _XmDropSiteManagerPart{
     Dimension		rootW, rootH;
     XtPointer		clipperList;
     _XmDropSiteUpdateInfo	updateInfo;
+#ifdef M222i
     XtIntervalId	updateTimeOutId;
+#endif /* M222i */
 } XmDropSiteManagerPart, *XmDropSiteManagerPartPtr;
 
 /* Full instance record declaration */

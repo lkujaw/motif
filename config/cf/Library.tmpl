@@ -436,4 +436,11 @@ InstallMultipleFlags($(HEADERS),$(INCDIR),$(INSTINCFLAGS))
 # endif
 
 NormalLintTarget($(SRCS))
+
+#ifdef NoSoSymlink
+SOSYMLINK = false
+#else
+SOSYMLINK = true
+#endif
+
 #endif /* defined(LibName) */

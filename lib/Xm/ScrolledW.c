@@ -1098,7 +1098,7 @@ Initialize(
     /***********************
       Initialize the auto_drag timer */
 
-    new_w->swindow.auto_drag_timer = 0 ;
+    new_w->swindow.auto_drag_timer = (XtIntervalId) 0 ;
     
     /***********************
       Initialize the auto_drag rectangles */
@@ -2060,7 +2060,7 @@ ConstantLayout(
 	   for the reverse configure to happen. I might not get called
 	   by the navigator API when the value already matches */
 	if (LayoutIsRtoLM((Widget)sw)) 
-	    SliderMove((Widget)sw->swindow.hScrollBar, clip, NULL);
+	    SliderMove((Widget)sw->swindow.hScrollBar, (XtPointer) clip, NULL);
 	sw->swindow.sw_prev_x = newx ;
     }
 
@@ -2270,7 +2270,7 @@ TimerEvent(
     } else {
 	/* free the closure and mark the timer as non existent */
 	XtFree((char*) closure);
-	sw->swindow.auto_drag_timer = 0 ;
+	sw->swindow.auto_drag_timer = (XtIntervalId) 0 ;
     }
 }
 
@@ -2300,9 +2300,9 @@ HandleDrag(
  	/* if that fails, initial_delay will stay 250 */
 	XtVaGetValues(w, XmNinitialDelay, &initial_delay, NULL);
 	
-	if (sw->swindow.auto_drag_timer == 0) {
-	    sw->swindow.auto_drag_closure = auto_clos = 
-			(AutoDragClosure *) XtMalloc(sizeof(AutoDragClosure)) ;
+	if (sw->swindow.auto_drag_timer == (XtIntervalId) 0) {
+	    auto_clos = (AutoDragClosure *) XtMalloc(sizeof(AutoDragClosure)) ;
+	    sw->swindow.auto_drag_closure = (XtPointer) auto_clos ;
 	    auto_clos->widget = w ;
 
 	    /* Here we need to find in which direction to move.
@@ -2334,10 +2334,10 @@ HandleDrag(
 
 	    XmDropSiteEndUpdate(w);
 
-	    if (sw->swindow.auto_drag_timer) {
+	    if (sw->swindow.auto_drag_timer != (XtIntervalId) 0) {
 		XtRemoveTimeOut (sw->swindow.auto_drag_timer);
 		XtFree(sw->swindow.auto_drag_closure); 
-		sw->swindow.auto_drag_timer = 0 ;
+		sw->swindow.auto_drag_timer = (XtIntervalId) 0 ;
 	    }
 	}
 }
@@ -2478,7 +2478,18 @@ UpdateAutoDrag(
        2 rectangles corresponding to the areas (on both side
        of the workarea) that autoscrolls this scrollbar */
 
-    if (hsb) {
+    /*
+    ** ... && XtIsRealized ...
+    **
+    ** SGI PR 848664.
+    **
+    ** Assertion failure can result when calculating drag rectangles
+    ** if XmNscrollLeftSide is true for a Scrolled Text.
+    **
+    ** A.J.Fountain, IST, May 2003.
+    */
+
+    if (hsb && XtIsRealized(hsb)) {
 
 	/* Get the 2 horizontal rectangles defining the drop site
 	   for horizontal autoscroll using a class method, so that
@@ -2514,7 +2525,7 @@ printf("hrect %d %d %d %d / %d %d %d %d \n",
 	XtFree((char *)hrect);
     }
     
-    if (vsb) {
+    if (vsb && XtIsRealized(vsb)) {
 	/* Get the 2 vertical rectangles defining the drop site
 	   for vertical autoscroll using a class method, so that
 	   subclasses can override them */

@@ -888,8 +888,20 @@ SetValues(Widget    current,
 
   if ( resize)
     {
-      if (XtIsRealized((Widget)newcb))
-          XtWidth(newcb) = XtHeight(newcb) = 0;
+      /*
+      ** XtIsRealized()... ? Not so.
+      **
+      ** Attach a ComboBox left/right to a containing form,
+      ** then change XmNcolumns. The beast extends the text
+      ** beyond the end of the widget.
+      **
+      ** A.J.Fountain, IST, May 2003.
+      */
+
+      /*
+      ** if (XtIsRealized((Widget)newcb))
+      **    XtWidth(newcb) = XtHeight(newcb) = 0;
+      */
 
       ComputeSize((Widget)newcb, 0, 0, &(XtWidth(newcb)), &(XtHeight(newcb)));
     }
@@ -3310,7 +3322,7 @@ SetEditBoxValue(Widget   cb,
   textTrait = (XmAccessTextualTrait)
     XmeTraitGet((XtPointer) XtClass(edit_box), XmQTaccessTextual);
 
-  textTrait->setValue(edit_box, value, XmFORMAT_XmSTRING);
+  textTrait->setValue(edit_box, (XtPointer) value, XmFORMAT_XmSTRING);
 }
 
 /* ------------- CONVENIENCE FUNCTIONS ---------- */
@@ -3381,7 +3393,11 @@ void
 XmComboBoxAddItem(Widget   widget,
 		  XmString item,
 		  int      pos,
+#if       NeedWidePrototypes
+		  int      unique)
+#else  /* NeedWidePrototypes */
 		  Boolean  unique)
+#endif /* NeedWidePrototypes */
 {
   XmComboBoxWidget cb = (XmComboBoxWidget)widget;
 

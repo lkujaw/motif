@@ -1229,9 +1229,9 @@ FinishTransfer(Widget wid, TransferContext tc)
 
   ts.client_data = tc -> client_data;
 
-  CallDoneProcs(wid, tc, &ts);
+  CallDoneProcs(wid, (XtPointer) tc, &ts);
   XtFree((char*) tc -> callback_struct);
-  FreeTransferID(tc);
+  FreeTransferID((XtPointer) tc);
 }
 
 /****************************************************************/

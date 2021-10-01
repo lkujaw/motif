@@ -1,0 +1,23 @@
+MacOSX port Notes
+------------------
+
+11/24/04
+
+This version will build and run on MacOSX.
+
+To build on JAGUAR (10.2)
+
+cd $MOTIFBUILDDIR/extras/wchar/lib
+make clean
+make
+
+before you do anything else. JAGUAR does not have wide character support.
+The files in extras/wchar are the citrix wide character implementation for freebsd
+that were subsequently incorporated into 10.3 (PANTHER)
+
+
+On Jaguar, build with
+
+export BOOTSTRAPCFLAGS="-DJAGUAR=1"
+
+On PANTHER, Motif should build out of the box.

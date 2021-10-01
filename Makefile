@@ -30,7 +30,7 @@
 # should be used.  However, if it is accidentally corrupted, or a build
 # is initiated on a new platform, Makefile.ini can be used to restart.
 #
-     RELEASE = "Release 2.1.30"
+     RELEASE = "Release 2.1.32"
      PRODUCT = "Motif"
        SHELL = /bin/sh
           RM = rm -f
@@ -131,7 +131,7 @@ Makefile::
 	$(MAKE) $(MFLAGS) xmakefile
 
 xmakefile: Imakefile
-	$(IMAKE_CMD) -s xmakefile -DTOPDIR=$(TOP) -DCURDIR=$(CURRENT_DIR)
+	$(IMAKE_CMD) -s xmakefile $(MOTIFBUILDEXTRAS) -DTOPDIR=$(TOP) -DCURDIR=$(CURRENT_DIR)
 
 World.Win32:
 	@echo :

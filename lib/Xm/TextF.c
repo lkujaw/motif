@@ -33,7 +33,11 @@ static char rcsid[] = "$TOG: TextF.c /main/65 1999/09/01 17:28:48 mgreess $"
 #include <stdio.h>
 #include <limits.h>		/* required for MB_LEN_MAX definition */
 #include <string.h>
+#ifdef NO_LOCAL_WCHAR /* for systems without wchar support */
+#include <local_ctype.h>
+#else
 #include <ctype.h>
+#endif
 #include "XmI.h"
 #include <X11/ShellP.h>
 #include <X11/VendorP.h>

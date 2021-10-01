@@ -371,7 +371,12 @@ xpmGetCmt(mdata, cmt)
 {
     if (!mdata->type)
 	*cmt = NULL;
-    else if (mdata->CommentLength) {
+    /* X.org security patch 0687 */
+    /*
+    ** else if (mdata->CommentLength) {
+    */
+    else if (mdata->CommentLength != 0 && mdata->CommentLength < SIZE_MAX - 1) {
+    /* END: X.org security patch 0687 */
 	*cmt = (char *) XpmMalloc(mdata->CommentLength + 1);
 	strncpy(*cmt, mdata->Comment, mdata->CommentLength);
 	(*cmt)[mdata->CommentLength] = '\0';

@@ -8,7 +8,7 @@ XCOMM $XFree86: xc/config/cf/lnxLib.rules,v 3.28.2.4 1998/12/18 11:56:08 dawes E
 #define HasSharedLibraries YES
 #endif
 #ifndef ForceNormalLib
-#define ForceNormalLib NO
+#define ForceNormalLib YES
 #endif
 
 #define SharedOldX NO

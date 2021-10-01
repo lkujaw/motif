@@ -1,19 +1,24 @@
 
-                               Motif 2.1.30
+                               Motif 2.1.32
 
                               Release Notes
 
                               The Open Group
 
 
-This document provides Release notes for Motif 2.1.30.
+This document provides Release notes for Motif 2.1.32.
+Motif 2.1.31 is to all intents and purposes functionally identical to
+the first Motif release, Motif 2.1.30, with the exception of a number
+minor bug and port fixes. These are listed at the end of this
+document.
+
 Please see the COPYRIGHT.MOTIF file included with this release.
 
 
 Introduction
 
-This document describes Motif version 2.1.30. Whenever "Motif"
-is used in these release notes, it means Motif 2.1.30.
+This document describes Motif version 2.1.32. Whenever "Motif"
+is used in these release notes, it means Motif 2.1.32.
 
 This document and accompanying text files contain important
 information. Please read them carefully before starting the build and
@@ -365,11 +370,11 @@ This release has been built and tested upon a base of X11R6.4 patchlevel 3.
 
    Changes to X11R6.4:
 
-	CDE and Motif 2.1.30 have been built and tested upon a base of 
+	CDE and Motif 2.1.32 have been built and tested upon a base of
 	X11R6.4 patchlevel 3.  During the development of 2.1.20, a 
 	significant defect in the I18N code of X was discovered; if you have
 	not yet corrected this problem, you are advised to do so prior
-	to making use of 2.1.30.
+	to making use of 2.1.32.
 
 	The symptom is that when XMODIFIERS is not set, there is a possibility
 	of memory corruption.   It is recommended that the following patch 
@@ -432,4 +437,26 @@ This release has been built and tested upon a base of X11R6.4 patchlevel 3.
 	      return ret;
 	  }
 
+Changes from Motif 2.1.30
 
+	- simple modifications to the Scale widget header definitions, as required
+	  for a RedHat 9 linux port.
+
+	- Notebook Constraints bug patch, whereby adding a Tab prior to any associated page,
+	  could result in division by zero when calculating Tab layout.
+
+	- Container ConstraintDestroy method could infinitely loop; assumptions built into the
+	  entry parent list destroy calculations were not necessarily correct.
+
+	- portfixes associated with various pointer alignments associated with Trait entry procedures,
+	  Hash entry, and so forth. Data is explicitly cast where appropriate.
+
+Changes from Motif 2.1.31
+
+	- X.org reported a security issue associated with the Xpm library. Since Motif 2.1.3x
+	  contains the Xpm library in embedded form, the patches had to be applied to Xm itself.
+
+	  CAN-2004-0687 and CAN-2004-0688 are the relevent X.org CVE numbers for the issue.
+
+	- ToggleButtons behave strangely in RadioBoxes: selecting the same toggle multiple
+	  times does not result in the toggle acting as such: it can stay off.

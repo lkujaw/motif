@@ -524,6 +524,19 @@ $(BUILDBINDIR)/binary: binary						@@\
 	cd $(BUILDBINDIR) && $(LN) $(BUILDBINTOP)/$(CURRENT_DIR)/binary .
 #endif /* LinkBuildBinary */
 
+
+#ifndef LinkBuildLibraryMaybe
+#ifdef UseInstalled
+#define LinkBuildLibraryMaybe(lib,doit) $(_NULLCMD_)
+#else
+#define LinkBuildLibraryMaybe(lib,doit) MakeDir($(BUILDLIBDIR))		@@\
+	@if doit; then (set -x; \					@@\
+	  RemoveFile($(BUILDLIBDIR)/lib); \				@@\
+	  cd $(BUILDLIBDIR) && $(LN) $(BUILDLIBTOP)/$(CURRENT_DIR)/lib .); fi
+#endif
+#endif /* LinkBuildLibraryMaybe */
+
+
 #ifndef BuildInterfaces
 #define BuildInterfaces(srclist,dstsubdir,dstupdir)			@@\
 interfaces::								@@\
@@ -2470,7 +2483,7 @@ $(ONESUBDIR)/Makefile:							@@\
 	@MakeFlagsToShellFlags(n,executeit="no"); \			@@\
 	cd $(ONESUBDIR) && \						@@\
 	if [ "$$executeit" != "no" ]; then \				@@\
-		ImakeSubCmdHelper -DTOPDIR=$(IMAKETOP) -DCURDIR=$(ONECURDIR)$(ONESUBDIR); \ @@\
+		ImakeSubCmdHelper -DTOPDIR=$(IMAKETOP) $(USER_IMAKE_DEFINES) -DCURDIR=$(ONECURDIR)$(ONESUBDIR); \ @@\
 	fi;								@@\
 									@@\
 target::								@@\

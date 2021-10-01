@@ -31,6 +31,23 @@
 XCOMM $TOG: Motif.tmpl /main/6 1999/05/19 17:00:05 mgreess $
 
 /* Include the X11 project template file. */
+#ifdef NoLocalWchar
+WCHARLIB=${TOP}/extras/wchar/lib/libwcs.a
+WCHARINCL=-I${TOP}/extras/wchar/h
+
+WCHARDEFS=${WCHARINCL} -DNO_LOCAL_WCHAR
+#else
+WCHARDEFS=
+#endif
+
+#ifdef NoLocalLangInfo
+LANGINFO_DEFS=-DNO_LOCAL_LANGINFO
+#else
+LANGINFO_DEFS=
+#endif
+
+#define XtExtraDefines          ${WCHARDEFS} ${LANGINFO_DEFS}
+
 #include <X11.tmpl>
 
 #ifdef AUTOMATION
@@ -167,7 +184,11 @@ XCOMM $TOG: Motif.tmpl /main/6 1999/05/19 17:00:05 mgreess $
 # define YaccFlags /**/
 #endif
 
+#ifdef M222i
+#define MotifSharedRev		3.1
+#else
 #define MotifSharedRev		2.1
+#endif
 
 #ifndef BuildMotifConfig
 # define BuildMotifConfig	YES
@@ -389,7 +410,7 @@ XCOMM $TOG: Motif.tmpl /main/6 1999/05/19 17:00:05 mgreess $
 
               MTOP = MTop
 #if !UseInstalledMotif
-TOP_MOTIF_INCLUDES = -I$(MINCLUDESRC)
+TOP_MOTIF_INCLUDES = -I$(MINCLUDESRC) XtExtraDefines
 #endif
 #if defined(UseInstalled) || (UseInstalledMotif && UseInstalledX11)
       UIL_INCLUDES = -I$(USRINCDIR)/uil

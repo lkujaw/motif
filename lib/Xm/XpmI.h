@@ -179,6 +179,20 @@ extern FILE *popen();
 		boundCheckingCalloc((long)(nelem),(long) (elsize))
 #endif
 
+/* X.org security patch 0687 */
+#if defined(SCO) || defined(__USLC__)
+#include <stdint.h>    /* For SIZE_MAX */
+#endif
+#include <limits.h>
+#ifndef SIZE_MAX
+# ifdef ULONG_MAX
+#  define SIZE_MAX ULONG_MAX
+# else
+#  define SIZE_MAX UINT_MAX
+# endif
+#endif
+/* END: X.org security patch 0687 */
+
 #define XPMMAXCMTLEN BUFSIZ
 typedef struct {
     unsigned int type;
@@ -276,9 +290,9 @@ typedef struct _xpmHashAtom {
 }      *xpmHashAtom;
 
 typedef struct {
-    int size;
-    int limit;
-    int used;
+    unsigned int size;   /* X.org security patch: 0687 */
+    unsigned int limit;  /* X.org security patch: 0687 */
+    unsigned int used;   /* X.org security patch: 0687 */
     xpmHashAtom *atomTable;
 }      xpmHashTable;
 

@@ -1075,6 +1075,7 @@ Arm(
  *       callbacks for XmNvalueChangedCallback are called.
  *
  ************************************************************************/
+
 /* ARGSUSED */
 static void 
 Select(
@@ -1084,7 +1085,10 @@ Select(
         Cardinal *num_params )
 {
   XmToggleButtonWidget tb = (XmToggleButtonWidget) wid ;
-  static XmToggleButtonWidget prev = NULL; 
+
+  /* Moved to global, so that XmToggleButtonSetState can reset */
+  /* static XmToggleButtonWidget prev = NULL;                  */
+
   XmToggleButtonCallbackStruct call_value;
   Boolean hit;
   XmMenuSystemTrait menuSTrait;
@@ -1093,11 +1097,13 @@ Select(
     return;
   
   tb->toggle.Armed = FALSE;
-  
-  if ((prev == tb) && ((tb->toggle.ind_type == XmONE_OF_MANY_ROUND)||
-                     (tb->toggle.ind_type == XmONE_OF_MANY_DIAMOND)||
-                     (tb->toggle.ind_type == XmONE_OF_MANY)))
-       return;
+
+  /*
+  ** if (((tb->toggle.ind_type == XmONE_OF_MANY_ROUND)||
+  **      (tb->toggle.ind_type == XmONE_OF_MANY_DIAMOND)||
+  **      (tb->toggle.ind_type == XmONE_OF_MANY)))
+  **      return;
+  */
 
   /* CR 8068: Verify that this is in fact a button event. */
   /* CR 9181: Consider clipping when testing visibility. */
@@ -1140,7 +1146,7 @@ Select(
 	  call_value.reason = XmCR_VALUE_CHANGED;
 	  call_value.event = event;
 	  call_value.set = tb->toggle.set;
-	  menuSTrait->entryCallback(XtParent(tb), (Widget) tb, &call_value);
+	  menuSTrait->entryCallback(XtParent(tb), (Widget) tb, (XtPointer) &call_value);
 	}
 
       if ((! tb->label.skipCallback) &&
@@ -1151,7 +1157,6 @@ Select(
 	}
 
     }
-prev = tb;
 }
 
 /**********************************************************************
@@ -1176,9 +1181,11 @@ Disarm(
 /* BEGIN OSF Fix pir 2826 */
 
   /* CR 7803:  Suppress redundant redraws. */
-  if (tb->toggle.set != tb->toggle.visual_set)
-    Redisplay((Widget) tb, event, (Region) NULL);
+  if (tb->toggle.set != tb->toggle.visual_set) {
+    tb->toggle.set = tb->toggle.visual_set ;
 
+    Redisplay((Widget) tb, event, (Region) NULL);
+  }
 /* END OSF Fix pir 2826 */
 }
 
@@ -1303,7 +1310,7 @@ ArmAndActivate(
       call_value.reason = XmCR_VALUE_CHANGED;
       call_value.event = event;
       call_value.set = tb->toggle.set;
-      menuSTrait->entryCallback(XtParent(tb), (Widget) tb, &call_value);
+      menuSTrait->entryCallback(XtParent(tb), (Widget) tb, (XtPointer) &call_value);
     }
   
   if ((! tb->label.skipCallback) &&
@@ -1514,7 +1521,7 @@ BtnUp(
 	  call_value.reason = XmCR_VALUE_CHANGED;
 	  call_value.event = event;
 	  call_value.set = tb->toggle.set;
-	  menuSTrait->entryCallback(XtParent(tb), (Widget) tb, &call_value);
+	  menuSTrait->entryCallback(XtParent(tb), (Widget) tb, (XtPointer) &call_value);
 	}
       
       if ((! tb->label.skipCallback) &&
@@ -2497,7 +2504,7 @@ KeySelect(
 	  call_value.reason = XmCR_VALUE_CHANGED;
 	  call_value.event = event;
 	  call_value.set = tb->toggle.set;
-	  menuSTrait->entryCallback(XtParent(tb), (Widget) tb, &call_value);
+	  menuSTrait->entryCallback(XtParent(tb), (Widget) tb, (XtPointer) &call_value);
 	}
       
       if (menuSTrait != NULL)
@@ -3268,7 +3275,7 @@ XmToggleButtonSetState(
 	      call_value.event = NULL;
 	      call_value.set = tw->toggle.set;
 	      
-	      menuSTrait->entryCallback(XtParent(tw), (Widget)tw, &call_value);
+	      menuSTrait->entryCallback(XtParent(tw), (Widget)tw, (XtPointer) &call_value);
 	    }
 
           if ((! tw->label.skipCallback) &&

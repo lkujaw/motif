@@ -56,10 +56,17 @@ extern "C" {
 #endif
 
 #define XmVERSION	2
+
+#ifdef    M222i
+#define XmREVISION	2
+#define XmUPDATE_LEVEL	2
+#define XmVERSION_STRING "@(#)Motif Version 2.2.2i (2.1.32)"
+#else  /* M222i */
 #define XmREVISION	1
-#define XmUPDATE_LEVEL	30
+#define XmUPDATE_LEVEL	32
+#define XmVERSION_STRING "@(#)Motif Version 2.1.32"
+#endif /* M222i */
 #define XmVersion	(XmVERSION * 1000 + XmREVISION)
-#define XmVERSION_STRING "@(#)Motif Version 2.1.30"
 
 externalref int xmUseVersion;
 
@@ -174,7 +181,7 @@ typedef struct __XmStringContextRec *XmStringContext;  /* opaque to outside */
 
 enum{	XmSTRING_COMPONENT_UNKNOWN,	  XmSTRING_COMPONENT_CHARSET,
 	XmSTRING_COMPONENT_TEXT,	  XmSTRING_COMPONENT_DIRECTION,
-        XmSTRING_COMPONENT_SEPARATOR,     XmSTRING_COMPONENT_LOCALE_TEXT,
+	XmSTRING_COMPONENT_SEPARATOR,     XmSTRING_COMPONENT_LOCALE_TEXT,
 	XmSTRING_COMPONENT_LOCALE,        XmSTRING_COMPONENT_WIDECHAR_TEXT,
 	XmSTRING_COMPONENT_LAYOUT_PUSH,   XmSTRING_COMPONENT_LAYOUT_POP,
 	XmSTRING_COMPONENT_RENDITION_BEGIN, XmSTRING_COMPONENT_RENDITION_END,
@@ -302,8 +309,8 @@ enum{	XmCHANGE_ALL,			XmCHANGE_NONE,
 enum{	XmPIXELS,			Xm100TH_MILLIMETERS,
 	Xm1000TH_INCHES,		Xm100TH_POINTS,
 	Xm100TH_FONT_UNITS,		XmINCHES,
-        XmCENTIMETERS,                  XmMILLIMETERS,
-        XmPOINTS,                       XmFONT_UNITS
+	XmCENTIMETERS,                  XmMILLIMETERS,
+	XmPOINTS,                       XmFONT_UNITS
 	} ;
 
 /* DeleteResponse values */
@@ -335,8 +342,8 @@ enum{	/* XmNONE */			XmBELL = 1
  ************************************************************************/
 
 enum {
-        XmPER_SHELL,			XmPER_WIDGET,
-        XmINHERIT_POLICY = 255
+	XmPER_SHELL,			XmPER_WIDGET,
+	XmINHERIT_POLICY = 255
 	} ;
 
 typedef unsigned char XmInputPolicy;
@@ -380,7 +387,7 @@ enum{	/* XmNONE */ XmQUICK_NAVIGATE = 1, XmINVALID_MATCH_BEHAVIOR
 	} ;
 
 enum{   XmZERO_BASED,		XmONE_BASED
-        } ;
+	} ;
 
 #define XmINVALID_POSITION -1
 
@@ -405,7 +412,7 @@ enum{   XmALIGNMENT_BASELINE_TOP,    /* XmALIGNMENT_CENTER, */
  ************************************************************************/
 
 enum{	XmFRAME_GENERIC_CHILD,          XmFRAME_WORKAREA_CHILD,
-        XmFRAME_TITLE_CHILD
+	XmFRAME_TITLE_CHILD
 	} ;
 /************************************************************************
  *  ToggleButton  defines
@@ -491,7 +498,7 @@ enum{	XmSLIDER,		XmTHERMOMETER} ;
  ************************************************************************/
 
 enum{	XmBACKGROUND_COLOR,     XmFOREGROUND_COLOR, 
-        XmTROUGH_COLOR,         XmSHADOWED_BACKGROUND} ;
+	XmTROUGH_COLOR,         XmSHADOWED_BACKGROUND} ;
 
 
 /************************************************************************
@@ -499,7 +506,7 @@ enum{	XmBACKGROUND_COLOR,     XmFOREGROUND_COLOR,
  ************************************************************************/
 
 enum{	/* XmNONE, */           XmETCHED_LINE = 1, 
-        XmTHUMB_MARK,     XmROUND_MARK } ;
+	XmTHUMB_MARK,     XmROUND_MARK } ;
 
 
 /************************************************************************
@@ -517,12 +524,12 @@ enum{	/* XmNONE */		XmNEAR_SLIDER = 1,
 
 /* XmWORK_AREA, XmMENU_BAR and XmSEPARATOR have to match the existing ones */
 enum{	/* XmWORK_AREA = 0, XmMENU_BAR = 1, */ 
-        XmHOR_SCROLLBAR = 2, 
+	XmHOR_SCROLLBAR = 2,
 	XmVERT_SCROLLBAR,
 	XmCOMMAND_WINDOW, 
-        /* XmSEPARATOR = 5 */
-        XmMESSAGE_WINDOW = 6,
-        XmSCROLL_HOR, XmSCROLL_VERT, XmNO_SCROLL,
+	/* XmSEPARATOR = 5 */
+	XmMESSAGE_WINDOW = 6,
+	XmSCROLL_HOR, XmSCROLL_VERT, XmNO_SCROLL,
 	XmCLIP_WINDOW, XmGENERIC_CHILD
 	} ;
 
@@ -552,9 +559,9 @@ enum{   XmOFF,				XmBUTTON2_ADJUST,
  ************************************************************************/
 
 enum{   XmAUTO_UNSET,                   XmAUTO_BEGIN,
-        XmAUTO_MOTION,                  XmAUTO_CANCEL,
-        XmAUTO_NO_CHANGE,               XmAUTO_CHANGE
-        };
+	XmAUTO_MOTION,                  XmAUTO_CANCEL,
+	XmAUTO_NO_CHANGE,               XmAUTO_CHANGE
+	};
 
 /************************************************************************
  *  Callback structures 
@@ -803,51 +810,51 @@ enum{	XmSINGLE_SELECT,		XmMULTIPLE_SELECT,
 enum{	XmSTATIC,			XmDYNAMIC
 	} ;
 enum{ XmNORMAL_MODE,			XmADD_MODE
-        } ;
+	} ;
 /************************************************************************
  *                                                                      *
  * Container Widget defines                                             *
  *                                                                      *
  ************************************************************************/
 
-        /* XmRAutomaticSelection */
+	/* XmRAutomaticSelection */
 enum {  XmNO_AUTO_SELECT,
-        XmAUTO_SELECT
-        };
+	XmAUTO_SELECT
+	};
 
-        /* XmRLineStyle */
+	/* XmRLineStyle */
 enum {  /* XmNO_LINE */
-        XmSINGLE = 1
-        };
+	XmSINGLE = 1
+	};
 
-        /* XmREntryViewType */
+	/* XmREntryViewType */
 enum {  /* XmLARGE_ICON */
-        /* XmSMALL_ICON */
-        XmANY_ICON = 2
-        };
+	/* XmSMALL_ICON */
+	XmANY_ICON = 2
+	};
 
-        /* XmRSpatialIncludeModel */
+	/* XmRSpatialIncludeModel */
 enum {  XmAPPEND,
-        XmCLOSEST,
-        XmFIRST_FIT
-        };
+	XmCLOSEST,
+	XmFIRST_FIT
+	};
 
-        /* XmRLayoutType */
+	/* XmRLayoutType */
 enum {  XmOUTLINE,
-        XmSPATIAL,
+	XmSPATIAL,
 	XmDETAIL
-        };
+	};
 
 	/* XmNoutlineButtonPolicy */
 enum {	XmOUTLINE_BUTTON_PRESENT,
 	XmOUTLINE_BUTTON_ABSENT
 	};
 
-        /* XmRSpatialPlaceStyle */
+	/* XmRSpatialPlaceStyle */
 enum {  /* XmNONE */
 	XmGRID = 1,
 	XmCELLS
-        };
+	};
 
 	/* XmRPrimaryOwnership */
 enum {	XmOWN_NEVER,
@@ -856,30 +863,30 @@ enum {	XmOWN_NEVER,
 	XmOWN_POSSIBLE_MULTIPLE
 	};
 
-        /* XmRSpatialResizeModel */
+	/* XmRSpatialResizeModel */
 enum {  XmGROW_MINOR,
 	XmGROW_MAJOR,
-        XmGROW_BALANCED
-        };
+	XmGROW_BALANCED
+	};
 
-        /* XmRSelectionTechnique */
+	/* XmRSelectionTechnique */
 enum {  XmMARQUEE,
-        XmMARQUEE_EXTEND_START,
-        XmMARQUEE_EXTEND_BOTH,
-        XmTOUCH_ONLY,
-        XmTOUCH_OVER
-        };
+	XmMARQUEE_EXTEND_START,
+	XmMARQUEE_EXTEND_BOTH,
+	XmTOUCH_ONLY,
+	XmTOUCH_OVER
+	};
 
-        /* XmRSpatialSnapModel */
+	/* XmRSpatialSnapModel */
 enum {  /* XmNONE */
-        XmSNAP_TO_GRID = 1,
-        XmCENTER
-        };
+	XmSNAP_TO_GRID = 1,
+	XmCENTER
+	};
 
-        /* XmROutlineState */
+	/* XmROutlineState */
 enum {  XmCOLLAPSED,
-        XmEXPANDED
-        };
+	XmEXPANDED
+	};
 
 /************************************************************************
  *                                                                      *
@@ -887,15 +894,15 @@ enum {  XmCOLLAPSED,
  *                                                                      *
  ************************************************************************/
 
-        /* XmRViewType */
+	/* XmRViewType */
 enum {  XmLARGE_ICON,
-        XmSMALL_ICON
-        };
+	XmSMALL_ICON
+	};
 
-        /* XmRVisualEmphasis */
+	/* XmRVisualEmphasis */
 enum {  XmSELECTED,
-        XmNOT_SELECTED
-        };
+	XmNOT_SELECTED
+	};
 
 /************************************************************************
  *                                                                      *
@@ -905,22 +912,22 @@ enum {  XmSELECTED,
 
 #define XmUNSPECIFIED_PAGE_NUMBER       (-32768)
 
-        /* XmRBindingType */
+	/* XmRBindingType */
 enum {  /* XmNONE */
-        /* XmPIXMAP */
-        XmSOLID = 2,
-        XmSPIRAL,
-        XmPIXMAP_OVERLAP_ONLY
-        };
+	/* XmPIXMAP */
+	XmSOLID = 2,
+	XmSPIRAL,
+	XmPIXMAP_OVERLAP_ONLY
+	};
 
-        /* XmRNBChildType */
+	/* XmRNBChildType */
 enum {  /* XmNONE */
-        XmPAGE = 1,
-        XmMAJOR_TAB,
-        XmMINOR_TAB,
-        XmSTATUS_AREA,
-        XmPAGE_SCROLLER
-        };
+	XmPAGE = 1,
+	XmMAJOR_TAB,
+	XmMINOR_TAB,
+	XmSTATUS_AREA,
+	XmPAGE_SCROLLER
+	};
 
 /************************************************************************
  *									*
@@ -1259,32 +1266,32 @@ typedef struct _XmSecondaryResourceDataRec{
 /********    Public Function Declarations for BaseClass.c    ********/
 
 extern Cardinal XmGetSecondaryResourceData( 
-                        WidgetClass w_class,
-                        XmSecondaryResourceData **secondaryDataRtn) ;
+			WidgetClass w_class,
+			XmSecondaryResourceData **secondaryDataRtn) ;
 
 /********    End Public Function Declarations    ********/
 
 /********    Public Function Declarations for ImageCache.c    ********/
 
 extern Boolean XmInstallImage( 
-                        XImage *image,
-                        char *image_name) ;
+			XImage *image,
+			char *image_name) ;
 extern Boolean XmUninstallImage( 
-                        XImage *image) ;
+			XImage *image) ;
 extern Pixmap XmGetPixmap( 
-                        Screen *screen,
-                        char *image_name,
-                        Pixel foreground,
-                        Pixel background) ;
+			Screen *screen,
+			char *image_name,
+			Pixel foreground,
+			Pixel background) ;
 extern Pixmap XmGetPixmapByDepth( 
-                        Screen *screen,
-                        char *image_name,
-                        Pixel foreground,
-                        Pixel background,
+			Screen *screen,
+			char *image_name,
+			Pixel foreground,
+			Pixel background,
 			int depth) ;
 extern Boolean XmDestroyPixmap( 
-                        Screen *screen,
-                        Pixmap pixmap) ;
+			Screen *screen,
+			Pixmap pixmap) ;
 
 /********    End Public Function Declarations    ********/
 
@@ -1299,12 +1306,12 @@ typedef XmOffset *XmOffsetPtr;
 
 
 extern void XmResolveAllPartOffsets( 
-                        WidgetClass w_class,
-                        XmOffsetPtr *offset,
-                        XmOffsetPtr *constraint_offset) ;
+			WidgetClass w_class,
+			XmOffsetPtr *offset,
+			XmOffsetPtr *constraint_offset) ;
 extern void XmResolvePartOffsets( 
-                        WidgetClass w_class,
-                        XmOffsetPtr *offset) ;
+			WidgetClass w_class,
+			XmOffsetPtr *offset) ;
 
 /********    End Public Function Declarations    ********/
 
@@ -1314,19 +1321,19 @@ extern void XmResolvePartOffsets(
 
 
 extern void XmUpdateDisplay( 
-                        Widget w) ;
+			Widget w) ;
 extern Widget XmObjectAtPoint(
 			Widget wid,
 			Position x,
 			Position y ) ;
 
 extern Boolean XmWidgetGetBaselines(
-                        Widget wid,
-                        Dimension **baselines,
-                        int *line_count);
+			Widget wid,
+			Dimension **baselines,
+			int *line_count);
 extern Boolean XmWidgetGetDisplayRect(
-                        Widget wid,
-                        XRectangle *displayrect);
+			Widget wid,
+			XRectangle *displayrect);
 
 /********    End Public Function Declarations    ********/
 
@@ -1341,33 +1348,33 @@ extern Boolean XmWidgetGetDisplayRect(
 /********    Public Function Declarations for ResConvert.c    ********/
 
 extern void XmCvtStringToUnitType( 
-                        XrmValuePtr args,
-                        Cardinal *num_args,
-                        XrmValue *from_val,
-                        XrmValue *to_val) ;
+			XrmValuePtr args,
+			Cardinal *num_args,
+			XrmValue *from_val,
+			XrmValue *to_val) ;
 extern char * XmRegisterSegmentEncoding( 
-                        char *fontlist_tag,
-                        char *ct_encoding) ;
+			char *fontlist_tag,
+			char *ct_encoding) ;
 extern char * XmMapSegmentEncoding( 
-                        char *fontlist_tag) ;
+			char *fontlist_tag) ;
 extern XmString XmCvtCTToXmString( 
-                        char *text) ;
+			char *text) ;
 extern Boolean XmCvtTextToXmString( 
-                        Display *display,
-                        XrmValuePtr args,
-                        Cardinal *num_args,
-                        XrmValue *from_val,
-                        XrmValue *to_val,
-                        XtPointer *converter_data) ;
+			Display *display,
+			XrmValuePtr args,
+			Cardinal *num_args,
+			XrmValue *from_val,
+			XrmValue *to_val,
+			XtPointer *converter_data) ;
 extern char * XmCvtXmStringToCT( 
-                        XmString string) ;
+			XmString string) ;
 extern Boolean XmCvtXmStringToText( 
-                        Display *display,
-                        XrmValuePtr args,
-                        Cardinal *num_args,
-                        XrmValue *from_val,
-                        XrmValue *to_val,
-                        XtPointer *converter_data) ;
+			Display *display,
+			XrmValuePtr args,
+			Cardinal *num_args,
+			XrmValue *from_val,
+			XrmValue *to_val,
+			XtPointer *converter_data) ;
 
 /********    End Public Function Declarations    ********/
 
@@ -1380,79 +1387,79 @@ extern int XmConvertStringToUnits(
 				  int to_type,
 				  XtEnum *parse_error);
 extern int XmConvertUnits( 
-                        Widget widget,
-                        int dimension,
-                        register int from_type,
-                        register int from_val,
-                        register int to_type) ;
+			Widget widget,
+			int dimension,
+			register int from_type,
+			register int from_val,
+			register int to_type) ;
 extern int XmCvtToHorizontalPixels( 
-                        Screen *screen,
-                        register int from_val,
-                        register int from_type) ;
+			Screen *screen,
+			register int from_val,
+			register int from_type) ;
 extern int XmCvtToVerticalPixels( 
-                        Screen *screen,
-                        register int from_val,
-                        register int from_type) ;
+			Screen *screen,
+			register int from_val,
+			register int from_type) ;
 extern int XmCvtFromHorizontalPixels( 
-                        Screen *screen,
-                        register int from_val,
-                        register int to_type) ;
+			Screen *screen,
+			register int from_val,
+			register int to_type) ;
 extern int XmCvtFromVerticalPixels( 
-                        Screen *screen,
-                        register int from_val,
-                        register int to_type) ;
+			Screen *screen,
+			register int from_val,
+			register int to_type) ;
 extern void XmSetFontUnits( 
-                        Display *display,
-                        int h_value,
-                        int v_value) ;
+			Display *display,
+			int h_value,
+			int v_value) ;
 extern void XmSetFontUnit( 
-                        Display *display,
-                        int value) ;
+			Display *display,
+			int value) ;
 
 /********    End Public Function Declarations    ********/
 
 /********    Public Function Declarations for MenuUtil.c    ********/
 
 extern void XmSetMenuCursor( 
-                        Display *display,
-                        Cursor cursorId) ;
+			Display *display,
+			Cursor cursorId) ;
 extern Cursor XmGetMenuCursor( 
-                        Display *display) ;
+			Display *display) ;
 
 /********    End Public Function Declarations    ********/
 
 /********    Public Function Declarations for Simple.c    ********/
 
 extern Widget XmCreateSimpleMenuBar( 
-                        Widget parent,
-                        String name,
-                        ArgList args,
-                        Cardinal arg_count) ;
+			Widget parent,
+			String name,
+			ArgList args,
+			Cardinal arg_count) ;
 extern Widget XmCreateSimplePopupMenu( 
-                        Widget parent,
-                        String name,
-                        ArgList args,
-                        Cardinal arg_count) ;
+			Widget parent,
+			String name,
+			ArgList args,
+			Cardinal arg_count) ;
 extern Widget XmCreateSimplePulldownMenu( 
-                        Widget parent,
-                        String name,
-                        ArgList args,
-                        Cardinal arg_count) ;
+			Widget parent,
+			String name,
+			ArgList args,
+			Cardinal arg_count) ;
 extern Widget XmCreateSimpleOptionMenu( 
-                        Widget parent,
-                        String name,
-                        ArgList args,
-                        Cardinal arg_count) ;
+			Widget parent,
+			String name,
+			ArgList args,
+			Cardinal arg_count) ;
 extern Widget XmCreateSimpleRadioBox( 
-                        Widget parent,
-                        String name,
-                        ArgList args,
-                        Cardinal arg_count) ;
+			Widget parent,
+			String name,
+			ArgList args,
+			Cardinal arg_count) ;
 extern Widget XmCreateSimpleCheckBox( 
-                        Widget parent,
-                        String name,
-                        ArgList args,
-                        Cardinal arg_count) ;
+			Widget parent,
+			String name,
+			ArgList args,
+			Cardinal arg_count) ;
 
 /********    End Public Function Declarations    ********/
 
@@ -1475,10 +1482,10 @@ extern Widget XmVaCreateSimplePulldownMenu(
 extern Widget XmVaCreateSimpleOptionMenu(
 			Widget parent,
 			String name,
-                        XmString option_label,
-                        KeySym option_mnemonic,
-                        int button_set,
-                        XtCallbackProc callback,
+			XmString option_label,
+			KeySym option_mnemonic,
+			int button_set,
+			XtCallbackProc callback,
 			...) ;
 extern Widget XmVaCreateSimpleRadioBox( 
 			Widget parent,
@@ -1496,21 +1503,21 @@ extern Widget XmVaCreateSimpleCheckBox(
 /********    Public Function Declarations for TrackLoc.c    ********/
 
 extern Widget XmTrackingEvent( 
-                        Widget widget,
-                        Cursor cursor,
+			Widget widget,
+			Cursor cursor,
 #if NeedWidePrototypes
-                        int confineTo,
+			int confineTo,
 #else
-                        Boolean confineTo,
+			Boolean confineTo,
 #endif /* NeedWidePrototypes */
-                        XEvent *pev) ;
+			XEvent *pev) ;
 extern Widget XmTrackingLocate( 
-                        Widget widget,
-                        Cursor cursor,
+			Widget widget,
+			Cursor cursor,
 #if NeedWidePrototypes
-                        int confineTo) ;
+			int confineTo) ;
 #else
-                        Boolean confineTo) ;
+			Boolean confineTo) ;
 #endif /* NeedWidePrototypes */
 
 /********    End Public Function Declarations    ********/
@@ -1522,252 +1529,252 @@ typedef void (*XmColorProc) (XColor *bg_color, XColor *fg_color,
 /********    Public Function Declarations for Visual.c    ********/
 
 extern XmColorProc XmSetColorCalculation( 
-                        XmColorProc proc) ;
+			XmColorProc proc) ;
 extern XmColorProc XmGetColorCalculation( void ) ;
 extern void XmGetColors( 
-                        Screen *screen,
-                        Colormap color_map,
-                        Pixel background,
-                        Pixel *foreground_ret,
-                        Pixel *top_shadow_ret,
-                        Pixel *bottom_shadow_ret,
-                        Pixel *select_ret) ;
+			Screen *screen,
+			Colormap color_map,
+			Pixel background,
+			Pixel *foreground_ret,
+			Pixel *top_shadow_ret,
+			Pixel *bottom_shadow_ret,
+			Pixel *select_ret) ;
 extern void XmChangeColor(
-                        Widget widget,
-                        Pixel background) ;
+			Widget widget,
+			Pixel background) ;
 
 /********    End Public Function Declarations    ********/
 
 /********    Public Function Declarations for XmString.c    ********/
 
 extern XmString XmStringCreate( 
-                        char *text,
-                        XmStringCharSet charset) ;
+			char *text,
+			XmStringCharSet charset) ;
 extern XmString XmStringCreateSimple( 
-                        char *text) ;
+			char *text) ;
 extern XmString XmStringCreateLocalized( 
-                        String text) ;
+			String text) ;
 extern XmString XmStringDirectionCreate( 
 #if NeedWidePrototypes
-                        int direction) ;
+			int direction) ;
 #else
-                        XmStringDirection direction) ;
+			XmStringDirection direction) ;
 #endif /* NeedWidePrototypes */
 extern XmString XmStringSeparatorCreate( void ) ;
 extern XmString XmStringSegmentCreate( 
-                        char *text,
-                        XmStringCharSet charset,
+			char *text,
+			XmStringCharSet charset,
 #if NeedWidePrototypes
-                        int direction,
-                        int separator) ;
+			int direction,
+			int separator) ;
 #else
-                        XmStringDirection direction,
-                        Boolean separator) ;
+			XmStringDirection direction,
+			Boolean separator) ;
 #endif /* NeedWidePrototypes */
 extern XmString XmStringLtoRCreate( 
-                        char *text,
-                        XmStringCharSet charset) ;
+			char *text,
+			XmStringCharSet charset) ;
 extern XmString XmStringCreateLtoR( 
-                        char *text,
-                        XmStringCharSet charset) ;
+			char *text,
+			XmStringCharSet charset) ;
 extern Boolean XmStringInitContext( 
-                        XmStringContext *context,
-                        XmString string) ;
+			XmStringContext *context,
+			XmString string) ;
 extern void XmStringFreeContext( 
-                        XmStringContext context) ;
+			XmStringContext context) ;
 extern XmStringComponentType XmStringGetNextComponent( 
-                        XmStringContext context,
-                        char **text,
-                        XmStringCharSet *charset,
-                        XmStringDirection *direction,
-                        XmStringComponentType *unknown_tag,
-                        unsigned short *unknown_length,
-                        unsigned char **unknown_value) ;
+			XmStringContext context,
+			char **text,
+			XmStringCharSet *charset,
+			XmStringDirection *direction,
+			XmStringComponentType *unknown_tag,
+			unsigned short *unknown_length,
+			unsigned char **unknown_value) ;
 extern XmStringComponentType XmStringPeekNextComponent( 
-                        XmStringContext context) ;
+			XmStringContext context) ;
 extern Boolean XmStringGetNextSegment( 
-                        XmStringContext context,
-                        char **text,
-                        XmStringCharSet *charset,
-                        XmStringDirection *direction,
-                        Boolean *separator) ;
+			XmStringContext context,
+			char **text,
+			XmStringCharSet *charset,
+			XmStringDirection *direction,
+			Boolean *separator) ;
 extern Boolean XmStringGetLtoR( 
-                        XmString string,
-                        XmStringCharSet charset,
-                        char **text) ;
+			XmString string,
+			XmStringCharSet charset,
+			char **text) ;
 extern XmFontListEntry XmFontListEntryCreate( 
-                        char *tag,
-                        XmFontType type,
-                        XtPointer font) ;
+			char *tag,
+			XmFontType type,
+			XtPointer font) ;
 extern XmFontListEntry XmFontListEntryCreate_r(
-                        char *tag,
-                        XmFontType type,
-                        XtPointer font,
-                        Widget wid) ;
+			char *tag,
+			XmFontType type,
+			XtPointer font,
+			Widget wid) ;
 extern void XmFontListEntryFree( 
-                        XmFontListEntry *entry) ;
+			XmFontListEntry *entry) ;
 extern XtPointer XmFontListEntryGetFont( 
-                        XmFontListEntry entry,
-                        XmFontType *typeReturn) ;
+			XmFontListEntry entry,
+			XmFontType *typeReturn) ;
 extern char * XmFontListEntryGetTag( 
-                        XmFontListEntry entry) ;
+			XmFontListEntry entry) ;
 extern XmFontList XmFontListAppendEntry( 
-                        XmFontList old,
-                        XmFontListEntry entry) ;
+			XmFontList old,
+			XmFontListEntry entry) ;
 extern XmFontListEntry XmFontListNextEntry( 
-                        XmFontContext context) ;
+			XmFontContext context) ;
 extern XmFontList XmFontListRemoveEntry( 
-                        XmFontList old,
-                        XmFontListEntry entry) ;
+			XmFontList old,
+			XmFontListEntry entry) ;
 extern XmFontListEntry XmFontListEntryLoad( 
-                        Display *display,
-                        char *fontName,
-                        XmFontType type,
-                        char *tag) ;
+			Display *display,
+			char *fontName,
+			XmFontType type,
+			char *tag) ;
 extern XmFontList XmFontListCreate( 
-                        XFontStruct *font,
-                        XmStringCharSet charset) ;
+			XFontStruct *font,
+			XmStringCharSet charset) ;
 extern XmFontList XmFontListCreate_r(
-                        XFontStruct *font,
-                        XmStringCharSet charset,
-                        Widget wid) ;
+			XFontStruct *font,
+			XmStringCharSet charset,
+			Widget wid) ;
 extern XmFontList XmStringCreateFontList( 
-                        XFontStruct *font,
-                        XmStringCharSet charset) ;
+			XFontStruct *font,
+			XmStringCharSet charset) ;
 extern XmFontList XmStringCreateFontList_r(
-                        XFontStruct *font,
-                        XmStringCharSet charset,
-                        Widget wid) ;
+			XFontStruct *font,
+			XmStringCharSet charset,
+			Widget wid) ;
 extern void XmFontListFree( 
-                        XmFontList fontlist) ;
+			XmFontList fontlist) ;
 extern XmFontList XmFontListAdd( 
-                        XmFontList old,
-                        XFontStruct *font,
-                        XmStringCharSet charset) ;
+			XmFontList old,
+			XFontStruct *font,
+			XmStringCharSet charset) ;
 extern XmFontList XmFontListCopy( 
-                        XmFontList fontlist) ;
+			XmFontList fontlist) ;
 extern Boolean XmFontListInitFontContext( 
-                        XmFontContext *context,
-                        XmFontList fontlist) ;
+			XmFontContext *context,
+			XmFontList fontlist) ;
 extern Boolean XmFontListGetNextFont( 
-                        XmFontContext context,
-                        XmStringCharSet *charset,
-                        XFontStruct **font) ;
+			XmFontContext context,
+			XmStringCharSet *charset,
+			XFontStruct **font) ;
 extern void XmFontListFreeFontContext( 
-                        XmFontContext context) ;
+			XmFontContext context) ;
 extern XmString XmStringConcat( 
-                        XmString a,
-                        XmString b) ;
+			XmString a,
+			XmString b) ;
 extern XmString XmStringConcatAndFree(
 			XmString a, 
 			XmString b) ;
 extern XmString XmStringNConcat( 
-                        XmString first,
-                        XmString second,
-                        int n) ;
+			XmString first,
+			XmString second,
+			int n) ;
 extern XmString XmStringCopy( 
-                        XmString string) ;
+			XmString string) ;
 extern XmString XmStringNCopy( 
-                        XmString str,
-                        int n) ;
+			XmString str,
+			int n) ;
 extern Boolean XmStringByteCompare( 
-                        XmString a1,
-                        XmString b1) ;
+			XmString a1,
+			XmString b1) ;
 extern Boolean XmStringCompare( 
-                        XmString a,
-                        XmString b) ;
+			XmString a,
+			XmString b) ;
 extern int XmStringLength( 
-                        XmString string) ;
+			XmString string) ;
 extern Boolean XmStringEmpty( 
-                        XmString string) ;
+			XmString string) ;
 extern Boolean XmStringIsVoid(XmString string); 
 extern Boolean XmStringHasSubstring( 
-                        XmString string,
-                        XmString substring) ;
+			XmString string,
+			XmString substring) ;
 extern void XmStringFree( 
-                        XmString string) ;
+			XmString string) ;
 extern Dimension XmStringBaseline( 
-                        XmFontList fontlist,
-                        XmString string) ;
+			XmFontList fontlist,
+			XmString string) ;
 extern Dimension XmStringWidth( 
-                        XmFontList fontlist,
-                        XmString string) ;
+			XmFontList fontlist,
+			XmString string) ;
 extern Dimension XmStringHeight( 
-                        XmFontList fontlist,
-                        XmString string) ;
+			XmFontList fontlist,
+			XmString string) ;
 extern void XmStringExtent( 
-                        XmFontList fontlist,
-                        XmString string,
-                        Dimension *width,
-                        Dimension *height) ;
+			XmFontList fontlist,
+			XmString string,
+			Dimension *width,
+			Dimension *height) ;
 extern int XmStringLineCount( 
-                        XmString string) ;
+			XmString string) ;
 extern void XmStringDraw( 
-                        Display *d,
-                        Window w,
-                        XmFontList fontlist,
-                        XmString string,
-                        GC gc,
+			Display *d,
+			Window w,
+			XmFontList fontlist,
+			XmString string,
+			GC gc,
 #if NeedWidePrototypes
-                        int x,
-                        int y,
-                        int width,
-                        unsigned int align,
-                        unsigned int lay_dir,
+			int x,
+			int y,
+			int width,
+			unsigned int align,
+			unsigned int lay_dir,
 #else
-                        Position x,
-                        Position y,
-                        Dimension width,
-                        unsigned char align,
-                        unsigned char lay_dir,
+			Position x,
+			Position y,
+			Dimension width,
+			unsigned char align,
+			unsigned char lay_dir,
 #endif /* NeedWidePrototypes */
-                        XRectangle *clip) ;
+			XRectangle *clip) ;
 extern void XmStringDrawImage( 
-                        Display *d,
-                        Window w,
-                        XmFontList fontlist,
-                        XmString string,
-                        GC gc,
+			Display *d,
+			Window w,
+			XmFontList fontlist,
+			XmString string,
+			GC gc,
 #if NeedWidePrototypes
-                        int x,
-                        int y,
-                        int width,
-                        unsigned int align,
-                        unsigned int lay_dir,
+			int x,
+			int y,
+			int width,
+			unsigned int align,
+			unsigned int lay_dir,
 #else
-                        Position x,
-                        Position y,
-                        Dimension width,
-                        unsigned char align,
-                        unsigned char lay_dir,
+			Position x,
+			Position y,
+			Dimension width,
+			unsigned char align,
+			unsigned char lay_dir,
 #endif /* NeedWidePrototypes */
-                        XRectangle *clip) ;
+			XRectangle *clip) ;
 extern void XmStringDrawUnderline( 
-                        Display *d,
-                        Window w,
-                        XmFontList fntlst,
-                        XmString str,
-                        GC gc,
+			Display *d,
+			Window w,
+			XmFontList fntlst,
+			XmString str,
+			GC gc,
 #if NeedWidePrototypes
-                        int x,
-                        int y,
-                        int width,
-                        unsigned int align,
-                        unsigned int lay_dir,
+			int x,
+			int y,
+			int width,
+			unsigned int align,
+			unsigned int lay_dir,
 #else
-                        Position x,
-                        Position y,
-                        Dimension width,
-                        unsigned char align,
-                        unsigned char lay_dir,
+			Position x,
+			Position y,
+			Dimension width,
+			unsigned char align,
+			unsigned char lay_dir,
 #endif /* NeedWidePrototypes */
-                        XRectangle *clip,
-                        XmString under) ;
+			XRectangle *clip,
+			XmString under) ;
 extern unsigned int XmCvtXmStringToByteStream(
 			XmString string,
-        	        unsigned char **prop_return);
+		        unsigned char **prop_return);
 extern XmString XmCvtByteStreamToXmString(
-        	        unsigned char *property);
+		        unsigned char *property);
 extern unsigned int XmStringByteStreamLength(unsigned char *string);
 extern XmStringComponentType XmStringPeekNextTriple(XmStringContext context);
 extern XmStringComponentType XmStringGetNextTriple(XmStringContext context,
@@ -1916,27 +1923,27 @@ extern XmRenderTable
 /********    Public Function Declarations for Dest.c    ********/
 
 extern Widget XmGetDestination( 
-                        Display *display) ;
+			Display *display) ;
 
 /********    End Public Function Declarations    ********/
 
 /********    Public Function Declarations for Traversal.c    ********/
 
 extern Boolean XmIsTraversable( 
-                        Widget wid) ;
+			Widget wid) ;
 extern XmVisibility XmGetVisibility( 
-                        Widget wid) ;
+			Widget wid) ;
 extern Widget XmGetTabGroup( 
-                        Widget wid) ;
+			Widget wid) ;
 extern Widget XmGetFocusWidget( 
-                        Widget wid) ;
+			Widget wid) ;
 extern Boolean XmProcessTraversal( 
-                        Widget w,
-                        XmTraversalDirection dir) ;
+			Widget w,
+			XmTraversalDirection dir) ;
 extern void XmAddTabGroup( 
-                        Widget tabGroup) ;
+			Widget tabGroup) ;
 extern void XmRemoveTabGroup( 
-                        Widget w) ;
+			Widget w) ;
 
 /********    End Public Function Declarations    ********/
 

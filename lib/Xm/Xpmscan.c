@@ -93,7 +93,8 @@ LFUNC(MSWGetImagePixels, int, (Display *d, XImage *image, unsigned int width,
 LFUNC(ScanTransparentColor, int, (XpmColor *color, unsigned int cpp,
 				  XpmAttributes *attributes));
 
-LFUNC(ScanOtherColors, int, (Display *display, XpmColor *colors, int ncolors,
+/* unsigned int ncolors: X.org security patch 0687 */
+LFUNC(ScanOtherColors, int, (Display *display, XpmColor *colors, unsigned int ncolors,
 			     Pixel *pixels, unsigned int mask,
 			     unsigned int cpp, XpmAttributes *attributes));
 
@@ -220,10 +221,21 @@ XpmCreateXpmImageFromImage(display, image, shapeimage,
     else
 	cpp = 0;
 
+    /* X.org security patch 0687 */
+    if ((height > 0 && width >= SIZE_MAX / height) ||
+    	width * height >= SIZE_MAX / sizeof(unsigned int))
+    	RETURN(XpmNoMemory);
+    /* END: X.org security patch 0687 */
+
     pmap.pixelindex =
 	(unsigned int *) XpmCalloc(width * height, sizeof(unsigned int));
     if (!pmap.pixelindex)
 	RETURN(XpmNoMemory);
+
+    /* X.org security patch 0687 */
+    if (pmap.size >= SIZE_MAX / sizeof(Pixel))
+    	RETURN(XpmNoMemory);
+    /* END: X.org security patch 0687 */
 
     pmap.pixels = (Pixel *) XpmMalloc(sizeof(Pixel) * pmap.size);
     if (!pmap.pixels)
@@ -280,6 +292,11 @@ XpmCreateXpmImageFromImage(display, image, shapeimage,
      * color
      */
 
+    /* X.org security patch 0687 */
+    if (pmap.ncolors >= SIZE_MAX / sizeof(XpmColor))
+    	RETURN(XpmNoMemory);
+    /* END: X.org security patch 0687 */
+
     colorTable = (XpmColor *) XpmCalloc(pmap.ncolors, sizeof(XpmColor));
     if (!colorTable)
 	RETURN(XpmNoMemory);
@@ -327,6 +344,12 @@ ScanTransparentColor(color, cpp, attributes)
 
     /* first get a character string */
     a = 0;
+
+    /* X.org security patch 0687 */
+    if (cpp >= SIZE_MAX - 1)
+    	return (XpmNoMemory);
+    /* END: X.org security patch 0687 */
+
     if (!(s = color->string = (char *) XpmMalloc(cpp + 1)))
 	return (XpmNoMemory);
     *s++ = printable[c = a % MAXPRINTABLE];
@@ -374,7 +397,7 @@ static int
 ScanOtherColors(display, colors, ncolors, pixels, mask, cpp, attributes)
     Display *display;
     XpmColor *colors;
-    int ncolors;
+    unsigned int ncolors; /* unsigned: X.org security patch 0687 */
     Pixel *pixels;
     unsigned int mask;
     unsigned int cpp;
@@ -416,6 +439,11 @@ ScanOtherColors(display, colors, ncolors, pixels, mask, cpp, attributes)
 	ncolors--;
 	pixels++;
     }
+
+    /* X.org security patch 0687 */
+    if (ncolors >= SIZE_MAX / sizeof(XColor) || cpp >= SIZE_MAX - 1)
+    	return (XpmNoMemory);
+    /* END: X.org security patch 0687 */
 
     /* first get character strings and rgb values */
     xcolors = (XColor *) XpmMalloc(sizeof(XColor) * ncolors);

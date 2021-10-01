@@ -1666,8 +1666,7 @@ Select(
       cback.reason = XmCR_ACTIVATE;
       
       if (menuSTrait != NULL)
-	menuSTrait -> entryCallback(XtParent(cb), (Widget) cb,
-					     &cback);
+	menuSTrait -> entryCallback(XtParent(cb), (Widget) cb, (XtPointer) &cback);
 
       if ((! LabG_SkipCallback(cb)) &&
 	  (CBG_ActivateCall(cb)))

@@ -3075,17 +3075,28 @@ ConstraintDestroy(
 	    return;
 
 	{
-		CwidNode 	node = c->node_ptr->child_ptr;
+		CwidNode node = c->node_ptr->child_ptr;
 
 		while (node)
 		{
-			Widget child = node->widget_ptr;
-			XtVaSetValues(child, XmNentryParent, NULL, NULL);
+			Widget   child = node->widget_ptr;
+			CwidNode next  = (CwidNode) 0 ;
+
+			if (child) {
+				XtVaSetValues(child, XmNentryParent, NULL, NULL);
+			}
+
 			/* because the above operation has changed the 
 			** linked-list, we just pull the first child off the
 			** list, rather than move along it
+			**
+			** Not so: the next pointer can end up the same as the head...
+			**
+			** A.J.Fountain, IST.
 			*/
-			node = c->node_ptr->child_ptr;
+
+			next = (c->node_ptr ? c->node_ptr->child_ptr : (CwidNode) 0) ;
+			node = ((node == next) ? (CwidNode) 0 : next) ;
 		}
 	}
 

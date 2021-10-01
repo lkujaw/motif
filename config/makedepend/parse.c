@@ -617,8 +617,10 @@ find_includes(filep, file, file_red, recursion, failOK)
 			break;
 		case ERROR:
 		case WARNING:
+#ifndef __APPLE__
 		    	warning("%s: %d: %s\n", file_red->i_file,
 				 filep->f_line, line);
+#endif
 		    	break;
 		    
 		case PRAGMA:

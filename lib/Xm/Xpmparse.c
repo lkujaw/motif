@@ -42,6 +42,28 @@
 #include "XpmI.h"
 #include <ctype.h>
 
+/* X.org security patch 0687 */
+#include <string.h>
+
+#ifdef HAS_STRLCAT
+# define STRLCAT(dst, src, dstsize) { \
+       if (strlcat(dst, src, dstsize) >= (dstsize)) \
+           return (XpmFileInvalid); }
+# define STRLCPY(dst, src, dstsize) { \
+       if (strlcpy(dst, src, dstsize) >= (dstsize)) \
+           return (XpmFileInvalid); }
+#else
+# define STRLCAT(dst, src, dstsize) { \
+       if ((strlen(dst) + strlen(src)) < (dstsize)) \
+           strcat(dst, src); \
+       else return (XpmFileInvalid); }
+# define STRLCPY(dst, src, dstsize) { \
+       if (strlen(src) < (dstsize)) \
+           strcpy(dst, src); \
+       else return (XpmFileInvalid); }
+#endif
+/* END: X.org security patch 0687 */
+
 LFUNC(ParsePixels, int, (xpmData *data, unsigned int width,
 			 unsigned int height, unsigned int ncolors,
 			 unsigned int cpp, XpmColor *colorTable,
@@ -209,7 +231,7 @@ xpmParseValues(data, width, height, ncolors, cpp,
     unsigned int *extensions;
 {
     unsigned int l;
-    char buf[BUFSIZ];
+    char buf[BUFSIZ + 1];  /* BUFSIZ + 1: X.org security patch 0687 */
 
     if (!data->format) {		/* XPM 2 or 3 */
 
@@ -318,16 +340,21 @@ xpmParseColors(data, ncolors, cpp, colorTablePtr, hashtable)
     XpmColor **colorTablePtr;
     xpmHashTable *hashtable;
 {
-    unsigned int key, l, a, b;
+    unsigned int key = 0, l, a, b, len; /* len: X.org security patch 0687 */
     unsigned int curkey;		/* current color key */
     unsigned int lastwaskey;		/* key read */
-    char buf[BUFSIZ];
+    char buf[BUFSIZ + 1];               /* BUFSIZ + 1: X.org security patch 0687 */
     char curbuf[BUFSIZ];		/* current buffer */
     char **sptr, *s;
     XpmColor *color;
     XpmColor *colorTable;
     char **defaults;
     int ErrorStatus;
+
+    /* X.org security patch 0687 */
+    if (ncolors >= SIZE_MAX / sizeof(XpmColor))
+    	return (XpmNoMemory);
+    /* END: X.org security patch 0687 */
 
     colorTable = (XpmColor *) XpmCalloc(ncolors, sizeof(XpmColor));
     if (!colorTable)
@@ -340,6 +367,14 @@ xpmParseColors(data, ncolors, cpp, colorTablePtr, hashtable)
 	    /*
 	     * read pixel value
 	     */
+
+	    /* X.org security patch 0687 */
+	    if (cpp >= SIZE_MAX - 1) {
+	    	xpmFreeColorTable(colorTable, ncolors);
+		return (XpmNoMemory);
+	    }
+	    /* END: X.org security patch 0687 */
+
 	    color->string = (char *) XpmMalloc(cpp + 1);
 	    if (!color->string) {
 		xpmFreeColorTable(colorTable, ncolors);
@@ -377,13 +412,23 @@ xpmParseColors(data, ncolors, cpp, colorTablePtr, hashtable)
 		}
 		if (!lastwaskey && key < NKEYS) {	/* open new key */
 		    if (curkey) {	/* flush string */
-			s = (char *) XpmMalloc(strlen(curbuf) + 1);
+	    	        /* X.org security patch 0687 */
+			/* s = (char *) XpmMalloc(strlen(curbuf) + 1); */
+
+			len = strlen(curbuf) + 1;
+			s = (char *) XpmMalloc(len);
+	    	        /* END: X.org security patch 0687 */
+
 			if (!s) {
 			    xpmFreeColorTable(colorTable, ncolors);
 			    return (XpmNoMemory);
 			}
 			defaults[curkey] = s;
-			strcpy(s, curbuf);
+
+			/* X.org security patch 0687 */
+			/* strcpy(s, curbuf); */
+			memcpy(s, curbuf, len);
+			/* END: X.org security patch 0687 */
 		    }
 		    curkey = key + 1;	/* set new key  */
 		    *curbuf = '\0';	/* reset curbuf */
@@ -394,9 +439,16 @@ xpmParseColors(data, ncolors, cpp, colorTablePtr, hashtable)
 			return (XpmFileInvalid);
 		    }
 		    if (!lastwaskey)
-			strcat(curbuf, " ");	/* append space */
+			/* X.org security patch 0687 */
+			/* strcat(curbuf, " "); */
+			STRLCAT(curbuf, " ", sizeof(curbuf));
+			/* END: X.org security patch 0687 */
 		    buf[l] = '\0';
-		    strcat(curbuf, buf);/* append buf */
+
+		    /* X.org security patch 0687 */
+		    /* strcat(curbuf, buf); */
+		    STRLCAT(curbuf, buf, sizeof(curbuf));
+		    /* END: X.org security patch 0687 */
 		    lastwaskey = 0;
 		}
 	    }
@@ -404,12 +456,22 @@ xpmParseColors(data, ncolors, cpp, colorTablePtr, hashtable)
 		xpmFreeColorTable(colorTable, ncolors);
 		return (XpmFileInvalid);
 	    }
-	    s = defaults[curkey] = (char *) XpmMalloc(strlen(curbuf) + 1);
+
+	    /* X.org security patch 0687 */
+	    /* s = defaults[curkey] = (char *) XpmMalloc(strlen(curbuf) + 1); */
+	    len = strlen(curbuf) + 1;
+	    s = defaults[curkey] = (char *) XpmMalloc(len);
+	    /* END: X.org security patch 0687 */
+
 	    if (!s) {
 		xpmFreeColorTable(colorTable, ncolors);
 		return (XpmNoMemory);
 	    }
-	    strcpy(s, curbuf);
+
+	    /* X.org security patch 0687 */
+	    /* strcpy(s, curbuf); */
+	    memcpy(s, curbuf, len);
+	    /* END: X.org security patch 0687 */
 	}
     } else {				/* XPM 1 */
 	/* get to the beginning of the first string */
@@ -422,6 +484,14 @@ xpmParseColors(data, ncolors, cpp, colorTablePtr, hashtable)
 	    /*
 	     * read pixel value
 	     */
+
+	    /* X.org security patch 0687 */
+	    if (cpp >= SIZE_MAX - 1) {
+	    	xpmFreeColorTable(colorTable, ncolors);
+	    	return (XpmNoMemory);
+	    }
+	    /* END: X.org security patch 0687 */
+
 	    color->string = (char *) XpmMalloc(cpp + 1);
 	    if (!color->string) {
 		xpmFreeColorTable(colorTable, ncolors);
@@ -450,16 +520,28 @@ xpmParseColors(data, ncolors, cpp, colorTablePtr, hashtable)
 	    *curbuf = '\0';		/* init curbuf */
 	    while (l = xpmNextWord(data, buf, BUFSIZ)) {
 		if (*curbuf != '\0')
-		    strcat(curbuf, " ");/* append space */
+	    	    /* X.org security patch 0687 */
+		    /* strcat(curbuf, " "); */
+		    STRLCAT(curbuf, " ", sizeof(curbuf));
+	    	    /* END: X.org security patch 0687 */
 		buf[l] = '\0';
-		strcat(curbuf, buf);	/* append buf */
+
+		/* X.org security patch 0687 */
+		/* strcat(curbuf, buf); */
+		STRLCAT(curbuf, buf, sizeof(curbuf));
+	    	/* END: X.org security patch 0687 */
 	    }
 	    s = (char *) XpmMalloc(strlen(curbuf) + 1);
 	    if (!s) {
 		xpmFreeColorTable(colorTable, ncolors);
 		return (XpmNoMemory);
 	    }
-	    strcpy(s, curbuf);
+
+	    /* X.org security patch 0687 */
+	    /* strcpy(s, curbuf); */
+	    memcpy(s, curbuf, len);
+	    /* END: X.org security patch 0687 */
+
 	    color->c_color = s;
 	    *curbuf = '\0';		/* reset curbuf */
 	    if (a < ncolors - 1)
@@ -484,6 +566,12 @@ ParsePixels(data, width, height, ncolors, cpp, colorTable, hashtable, pixels)
     unsigned int *iptr, *iptr2;
     unsigned int a, x, y;
 
+    /* X.org security patch 0687 */
+    if ((height > 0 && width >= SIZE_MAX / height) ||
+    	width * height >= SIZE_MAX / sizeof(unsigned int))
+    	return XpmNoMemory;
+    /* END: X.org security patch 0687 */
+
 #ifndef FOR_MSW
     iptr2 = (unsigned int *) XpmMalloc(sizeof(unsigned int) * width * height);
 #else
@@ -506,6 +594,11 @@ ParsePixels(data, width, height, ncolors, cpp, colorTable, hashtable, pixels)
 					 * colors */
 	{
 	    unsigned short colidx[256];
+
+	    /* X.org security patch 0687 */
+	    if (ncolors > 256)
+	    	return (XpmFileInvalid);
+	    /* END: X.org security patch 0687 */
 
 	    bzero((char *)colidx, 256 * sizeof(short));
 	    for (a = 0; a < ncolors; a++)
@@ -583,6 +676,11 @@ if (cidx[f]) XpmFree(cidx[f]);}
 	{
 	    char *s;
 	    char buf[BUFSIZ];
+
+	    /* X.org security patch 0687 */
+	    if (cpp >= sizeof(buf))
+	    	return (XpmFileInvalid);
+	    /* END: X.org security patch 0687 */
 
 	    buf[cpp] = '\0';
 	    if (USE_HASHTABLE) {

@@ -544,9 +544,8 @@ ClassPartInitialize(
    _XmFastSubclassInit (wc, XmMENU_SHELL_BIT);
 
     /* Install the specifyrendertable trait for all subclasses */
-    XmeTraitSet((XtPointer)wc, XmQTspecifyRenderTable, 
-		(XtPointer) &menushellSRT);
-    XmeTraitSet(wc, XmQTspecifyLayoutDirection, (XtPointer) &LayoutDirection);
+    XmeTraitSet((XtPointer)wc, XmQTspecifyRenderTable,     (XtPointer) &menushellSRT);
+    XmeTraitSet((XtPointer)wc, XmQTspecifyLayoutDirection, (XtPointer) &LayoutDirection);
 
 }
  

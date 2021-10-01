@@ -28,7 +28,7 @@ Licensee's Defect Number:  <your internal reference number>
 Hardware/Software Configuration
 -------------------------------
 
-Offering and Version:   <examples: Motif 2.1.30>
+Offering and Version:   <examples: Motif 2.1.32>
 Component (Module):     <examples: src/usr/bin/mesg.c, or lib/Xm/FileSB.c>
 Client Hardware:        <client machine type, memory, etc.>
 Client Software:        <client OS and X windows version, if relevant>

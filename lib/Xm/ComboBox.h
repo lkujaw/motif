@@ -64,7 +64,12 @@ extern Widget XmCreateDropDownList (Widget parent,
 extern void XmComboBoxAddItem (Widget   widget,
 			       XmString item,
 			       int      pos,
+#if       NeedWidePrototypes
+			       int      unique);
+#else  /* NeedWidePrototypes */
 			       Boolean  unique);
+#endif /* NeedWidePrototypes */
+
 extern void XmComboBoxDeletePos (Widget widget,
 				 int    pos);
 extern void XmComboBoxSelectItem (Widget   widget,

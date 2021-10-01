@@ -162,6 +162,9 @@ typedef struct _XmGadgetPart
 
    Mask event_mask;
    XmDirection layout_direction;
+#ifdef M222i
+   XmString pad_tool_tip_string;
+#endif /* M222i */
 } XmGadgetPart;
 
 /*  Full instance record declaration  */

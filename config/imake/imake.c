@@ -185,6 +185,7 @@
 # define SIGCHLD		SIGCLD
 #endif
 #include <sys/stat.h>
+
 #ifndef X_NOT_POSIX
 # ifdef _POSIX_SOURCE
 #  ifdef SCO325
@@ -1144,6 +1145,11 @@ define_os_defaults(inFile)
 #ifdef linux
     get_libc_version (inFile);
     get_ld_version(inFile);
+#endif
+
+#ifdef JAGUAR
+	(void) fprintf ( stderr, "imake on MacosX 10.2 (Jaguar)\n");
+	fprintf(inFile, "#define Jaguar 1\n");
 #endif
     get_gcc_incdir(inFile);
 #ifdef __FreeBSD__

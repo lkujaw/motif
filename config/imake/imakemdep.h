@@ -213,7 +213,7 @@
  *     all colons).  One way to tell if you need this is to see whether or not
  *     your Makefiles have no tabs in them and lots of @@ strings.
  */
-#if defined(sun) || defined(SYSV) || defined(SVR4) || defined(hcx) || defined(WIN32) || defined(sco) || (defined(AMOEBA) && defined(CROSS_COMPILE))
+#if defined(sun) || defined(SYSV) || defined(SVR4) || defined(hcx) || defined(WIN32) || defined(__APPLE__) || defined(sco) || (defined(AMOEBA) && defined(CROSS_COMPILE))
 #define FIXUP_CPP_WHITESPACE
 #endif
 #ifdef WIN32
@@ -250,7 +250,7 @@
 #if defined(sun) && (defined(SVR4) || defined(__svr4__) || defined(__SVR4) || defined(__sol__))
 #define DEFAULT_CPP "/usr/ccs/lib/cpp"
 #endif
-#ifdef __bsdi__
+#if defined(__bsdi__) || defined(__APPLE__)
 #define DEFAULT_CPP "/usr/bin/cpp"
 #endif
 #ifdef __uxp__
@@ -624,6 +624,12 @@ char *cpp_argv[ARGUMENTS] = {
 # define DEFAULT_OS_MINOR_REV	"r %*d.%[0-9]"
 # define DEFAULT_OS_TEENY_REV	"r %*d.%*d.%[0-9]"
 # define DEFAULT_OS_NAME	"srvm %[^\n]"
+#elif defined(__APPLE__)
+/* uname -r returns "x.y[.z]", e.g. "5.4" or "4.1.3" */
+# define DEFAULT_OS_MAJOR_REV	"r %[0-9]"
+# define DEFAULT_OS_MINOR_REV	"r %*d.%[0-9]"
+# define DEFAULT_OS_TEENY_REV	"r %*d.%*d.%[0-9]"
+# define DEFAULT_OS_NAME	"srm %[^\n]"
 #elif defined(hpux)
 /* uname -r returns "W.x.yz", e.g. "B.10.01" */
 # define DEFAULT_OS_MAJOR_REV	"r %*[^.].%[0-9]"
@@ -885,6 +891,9 @@ struct symtab	predefs[] = {
 #endif
 #ifdef bsd43
 	{"bsd43", "1"},
+#endif
+#ifdef __APPLE__
+	{"__darwin__", "1"},
 #endif
 #ifdef hcx
 	{"hcx", "1"},

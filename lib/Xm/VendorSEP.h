@@ -115,6 +115,16 @@ typedef struct {
  XmInputPolicy		input_policy;
 
  Boolean 		verify_preedit;
+#ifdef M222i
+ Widget         pad_label;
+ int            pad_post_delay;
+ int            pad_post_duration;
+ XtIntervalId   pad_timer;
+ XtIntervalId   pad_duration_timer;
+ Time           pad_leave_time;
+ Widget         pad_slider;
+ Boolean        pad_enable;
+#endif /* M222i */
 } XmVendorShellExtPart, *XmVendorShellExtPartPtr;
 
 externalref XmVendorShellExtClassRec 	xmVendorShellExtClassRec;
