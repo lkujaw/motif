@@ -1,0 +1,1 @@
+makestrs :: makestrs.c
